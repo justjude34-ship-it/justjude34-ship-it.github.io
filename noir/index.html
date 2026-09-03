@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Noir — OLED-first wallpaper atelier. True black. Emissive abstracts. Desktop 8K." />
+  <title>Noir</title>
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Outfit:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand__mark">Noir</div>
+        <div class="brand__sub">OLED · Desktop 8K</div>
+      </div>
+      <div class="topbar__actions">
+        <button class="icon-btn" id="btnClearFilters" title="Reset filters" aria-label="Reset filters">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.6">
+            <path d="M4 6h16M7 12h10M10 18h4" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <section class="view is-active" id="view-discover" data-view="discover"></section>
+    <section class="view" id="view-abstract" data-view="abstract"></section>
+    <section class="view" id="view-favorites" data-view="favorites"></section>
+    <section class="view" id="view-search" data-view="search"></section>
+
+    <nav class="dock" aria-label="Primary">
+      <button data-nav="discover" class="is-on">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 11.5 12 4l8 7.5V20a1 1 0 0 1-1 1h-5v-6H10v6H5a1 1 0 0 1-1-1z"/></svg>
+        Discover
+      </button>
+      <button data-nav="abstract">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="8"/><path d="M8 14c2-3 6-3 8 0"/></svg>
+        Abstract
+      </button>
+      <button data-nav="favorites" style="position:relative">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.4-7-9.2C5 8 7.2 6 9.4 6c1.3 0 2.4.6 2.6 1.6C12.2 6.6 13.3 6 14.6 6 16.8 6 19 8 19 10.8 19 15.6 12 20 12 20z"/></svg>
+        Favorites
+        <span class="pip" id="favPip" hidden></span>
+      </button>
+      <button data-nav="search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>
+        Search
+      </button>
+    </nav>
+  </div>
+
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightbox__stage is-desktop" id="lbStage">
+      <canvas id="lbCanvas"></canvas>
+    </div>
+    <button class="nav-fab prev" id="lbPrev" aria-label="Previous">‹</button>
+    <button class="nav-fab next" id="lbNext" aria-label="Next">›</button>
+    <div class="download-menu" id="dlMenu">
+      <button data-aspect="desktop">Desktop 8K <span class="hint">16:9 · noir-slug-8k.jpg</span></button>
+      <button data-aspect="phone">Phone 9:16</button>
+      <button data-aspect="ultrawide">Ultrawide 21:9</button>
+      <button data-aspect="square">Square 1:1</button>
+    </div>
+    <div class="lightbox__bar">
+      <div class="lightbox__info">
+        <h2 id="lbTitle">—</h2>
+        <p id="lbMeta">—</p>
+      </div>
+      <div class="lightbox__acts">
+        <button class="btn" id="lbHeart" aria-label="Favorite">♡</button>
+        <button class="btn btn--glow" id="lbDownload">Download</button>
+        <button class="btn" id="lbClose">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="catalog.js"></script>
+  <script src="art.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
