@@ -1,0 +1,18 @@
+{
+  "name": "Numera Plus",
+  "short_name": "Numera Plus",
+  "description": "Pythagorean birth chart decoder through the teachings of David A. Phillips. Client-side only.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#05060d",
+  "theme_color": "#05060d",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
