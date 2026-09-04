@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#05060c">
+<meta name="description" content="Numera Plus — Pythagorean Birth Chart decoder through the teachings of David A. Phillips.">
+<title>Numera Plus</title>
+<link rel="manifest" href="./manifest.json">
+<link rel="icon" href="./icon.svg" type="image/svg+xml">
+<style>
+:root{--bg:#05060c;--line:rgba(167,139,250,.22);--text:#eef2ff;--muted:#9aa3c7}
+*{box-sizing:border-box}html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,sans-serif;line-height:1.55}
+body:before{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(800px 420px at 12% -8%,rgba(167,139,250,.22),transparent 55%),radial-gradient(640px 380px at 92% 6%,rgba(244,114,182,.16),transparent 50%)}
+.wrap{max-width:760px;margin:0 auto;padding:1.1rem 1rem 4rem}
+.brand{font-weight:700;letter-spacing:.04em;background:linear-gradient(90deg,#7dd3fc,#a78bfa,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.pill{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.28rem .7rem;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#c4c9e8}
+.hero{text-align:center;padding:1.3rem 0}
+h1{font-size:clamp(2.4rem,12vw,4.6rem);margin:.3rem 0;background:linear-gradient(90deg,#7dd3fc,#c4b5fd,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{color:#c9d0ee;max-width:26rem;margin:.3rem auto 1rem}
+button{font:inherit;cursor:pointer;border-radius:999px}
+.cta{border:0;padding:.9rem 1.15rem;color:#081018;font-weight:700;background:linear-gradient(90deg,#818cf8,#22d3ee,#f0abfc)}
+.ghost,.tiny{border:1px solid var(--line);background:rgba(8,10,20,.55);color:var(--text);padding:.7rem 1rem}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:.7rem;margin:1.2rem 0}
+.stat{border:1px solid var(--line);border-radius:18px;padding:1rem .4rem;text-align:center;background:rgba(10,12,22,.7)}
+.stat b{display:block;font-size:1.7rem}.stat span{font-size:.68rem;letter-spacing:.12em;color:var(--muted)}
+.card{border:1px solid var(--line);border-radius:22px;padding:1.1rem;margin:1rem 0;background:rgba(12,14,24,.78)}
+.kicker{font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:#b7bddf;margin:0 0 .35rem}
+h2{margin:.2rem 0 .5rem;background:linear-gradient(90deg,#7dd3fc,#f472b6);-webkit-background-clip:text;background-clip:text;color:transparent}
+label{display:block;font-size:.78rem;color:var(--muted);margin:.5rem 0 .25rem}
+input{width:100%;background:#090b14;color:var(--text);border:1px solid var(--line);border-radius:14px;padding:.75rem .8rem;font:inherit}
+.row{display:flex;gap:.5rem;flex-wrap:wrap;margin:.6rem 0}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.55rem;max-width:320px;margin:0 auto}
+.cell{min-height:84px;border-radius:16px;border:1px solid var(--line);background:rgba(8,10,18,.8);display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cell.empty{opacity:.55}.n{font-size:1.25rem;letter-spacing:.04em}.q{font-size:.68rem;color:var(--muted)}
+.bar{display:grid;grid-template-columns:110px 1fr 28px;gap:.5rem;align-items:center;margin:.35rem 0}
+.track{height:8px;background:#14182a;border-radius:99px;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,#7dd3fc,#f472b6)}
+.chip{display:inline-block;border:1px solid var(--line);border-radius:999px;padding:.28rem .65rem;margin:.15rem;font-size:.82rem}
+.good{color:#5eead4}.lesson{color:#f9a8d4}
+.compare{display:grid;gap:.8rem}
+@media(min-width:700px){.compare{grid-template-columns:1fr 1fr}}
+footer{margin-top:2rem;text-align:center;color:var(--muted);font-size:.82rem}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">NUMERA PLUS</div>
+<section class="hero">
+<div class="pill">The Pythagorean Birth Chart</div>
+<h1>NUMERA PLUS</h1>
+<p class="tag">Your Birth Chart, decoded through the teachings of David A. Phillips</p>
+<button class="cta" onclick="document.getElementById('decode').scrollIntoView({behavior:'smooth'})">Decode My Chart</button>
+<div class="row" style="justify-content:center"><button class="ghost" onclick="document.getElementById('how').scrollIntoView({behavior:'smooth'})">How the chart works</button></div>
+<div class="stats"><div class="stat"><b>9</b><span>Squares</span></div><div class="stat"><b>8</b><span>Arrow lines</span></div><div class="stat"><b>6</b><span>Planes</span></div></div>
+</section>
+<section class="card" id="decode">
+<p class="kicker">Step one</p>
+<h2>Enter Your Birth Date</h2>
+<p>Every digit of your day, month and year is placed into the Pythagorean grid. Zeros occupy no square.</p>
+<div class="row">
+<button class="tiny" type="button" onclick="setMode('picker')">Date picker</button>
+<button class="tiny" type="button" onclick="setMode('manual')">Day / Month / Year</button>
+</div>
+<div id="pickerBox"><label for="dob">Date of birth</label><input id="dob" type="date"></div>
+<div id="manualBox" hidden>
+<div class="compare">
+<div><label for="dd">Day</label><input id="dd" inputmode="numeric" maxlength="2" placeholder="29"></div>
+<div><label for="mm">Month</label><input id="mm" inputmode="numeric" maxlength="2" placeholder="11"></div>
+<div><label for="yyyy">Year</label><input id="yyyy" inputmode="numeric" maxlength="4" placeholder="1968"></div>
+</div></div>
+<div class="row">
+<button class="cta" type="button" onclick="decodeSelf()">Decode My Chart</button>
+<button class="tiny" type="button" onclick="loadExample()">Try an example</button>
+</div>
+</section>
+<section class="card" id="resultCard" hidden>
+<p class="kicker">Your reading</p>
+<h2 id="resultTitle">Your chart</h2>
+<p id="resultMeta"></p>
+<div class="grid" id="grid"></div>
+<div id="planes"></div>
+<div id="numbers"></div>
+<div class="row"><button class="tiny" type="button" onclick="window.print()">Print</button></div>
+</section>
+<section class="card" id="compare">
+<p class="kicker">Side by side</p>
+<h2>Compare Two Charts</h2>
+<div class="compare">
+<div><label for="dobA">First date</label><input id="dobA" type="date"></div>
+<div><label for="dobB">Second date</label><input id="dobB" type="date"></div>
+</div>
+<div class="row"><button class="tiny" type="button" onclick="compareCharts()">Compare</button></div>
+<div id="compareOut"></div>
+</section>
+<section class="card" id="how">
+<p class="kicker">Section 09</p>
+<h2>How the Chart Works</h2>
+<p>The Pythagorean birth chart is a 3 × 3 grid of the digits 1 to 9. Your date of birth fills it, and the shape of what is filled — and what is left empty — is the reading.</p>
+<div class="grid">
+<div class="cell"><span class="n">3</span></div><div class="cell"><span class="n">6</span></div><div class="cell"><span class="n">9</span></div>
+<div class="cell"><span class="n">2</span></div><div class="cell"><span class="n">5</span></div><div class="cell"><span class="n">8</span></div>
+<div class="cell"><span class="n">1</span></div><div class="cell"><span class="n">4</span></div><div class="cell"><span class="n">7</span></div>
+</div>
+<p><b>Across:</b> 3-6-9 Mind · 2-5-8 Soul · 1-4-7 Physical</p>
+<p><b>Down:</b> 3-2-1 Thought · 6-5-4 Will · 9-8-7 Action</p>
+<p><b>Diagonals:</b> 1-5-9 Determination · 3-5-7 Compassion</p>
+<p>Write the date as DD/MM/YYYY. Example: 29/11/1968 becomes 2, 9, 1, 1, 1, 9, 6, 8. Zeros occupy no square. Digits stack. An empty square is a lesson, not a sentence.</p>
+<p>Everything is calculated in your browser. Nothing is uploaded or stored on a server.</p>
+</section>
+<footer>The Birth Chart Decoder — 2026 · Numera Plus</footer>
+</div>
+<script>
+const ORDER=[3,6,9,2,5,8,1,4,7];
+const LINES=[
+{id:'mind',nums:[3,6,9],plane:'Mind',strength:'Intellect',empty:'Poor Memory'},
+{id:'soul',nums:[2,5,8],plane:'Soul',strength:'Emotional Balance',empty:'Hypersensitivity'},
+{id:'physical',nums:[1,4,7],plane:'Physical',strength:'Practicality',empty:'Impracticality'},
+{id:'thought',nums:[3,2,1],plane:'Thought',strength:'The Planner',empty:'Confusion'},
+{id:'will',nums:[6,5,4],plane:'Will',strength:'The Will',empty:'Frustration'},
+{id:'action',nums:[9,8,7],plane:'Action',strength:'Activity',empty:'Hesitation'},
+{id:'det',nums:[1,5,9],plane:'Determination',strength:'Determination',empty:'Resignation'},
+{id:'comp',nums:[3,5,7],plane:'Compassion',strength:'Compassion',empty:'The Enquirer (scepticism)'}
+];
+const PLANES6=['mind','soul','physical','thought','will','action'];
+const MEANING={
+1:{name:'Expression',t:'Communication and individuality.'},
+2:{name:'Intuition',t:'Sensitivity, pairing, and quiet knowing.'},
+3:{name:'Memory',t:'Recall and making sense.'},
+4:{name:'Order',t:'Practicality and workable shape.'},
+5:{name:'Freedom',t:'Love, change, and room to move.'},
+6:{name:'Imagination',t:'Creativity and responsibility.'},
+7:{name:'Learning',t:'Patience and lived wisdom.'},
+8:{name:'Worldly wisdom',t:'Independence and judgement.'},
+9:{name:'Ideal',t:'Ambition with a humanitarian tilt.'}
+};
+const RULING={2:'intuition and peacemaking',3:'express, remember, teach',4:'build steadily',5:'freedom as teacher',6:'create and care',7:'learn by living it',8:'handle the world with integrity',9:'serve a wider ideal',10:'a completed cycle, then a simpler start',11:'high voltage — ground it in kindness',22:'master builder underpinned by the 4'};
+function setMode(mode){
+ document.getElementById('pickerBox').hidden=mode!=='picker';
+ document.getElementById('manualBox').hidden=mode!=='manual';
+}
+function parseParts(dd,mm,yyyy){
+ const d=+dd,m=+mm,y=+yyyy;
+ if(!d||!m||!y||d<1||d>31||m<1||m>12||y<1000||y>2100) return null;
+ return {d:d,m:m,y:y,label:String(d).padStart(2,'0')+'/'+String(m).padStart(2,'0')+'/'+y};
+}
+function fromPicker(id){
+ const v=document.getElementById(id).value; if(!v) return null;
+ const p=v.split('-'); return parseParts(p[2],p[1],p[0]);
+}
+function currentDate(){
+ return !document.getElementById('manualBox').hidden ? parseParts(document.getElementById('dd').value,document.getElementById('mm').value,document.getElementById('yyyy').value) : fromPicker('dob');
+}
+function padDate(p){return String(p.d).padStart(2,'0')+String(p.m).padStart(2,'0')+String(p.y)}
+function rulingOf(p){
+ const raw=[...padDate(p)].reduce(function(a,c){return a+Number(c)},0);
+ if(raw===22) return {raw:raw,ruling:22,label:'22/4'};
+ if(raw===11) return {raw:raw,ruling:11,label:'11'};
+ var n=raw; while(n>11 && n!==22) n=[...String(n)].reduce(function(a,c){return a+Number(c)},0);
+ if(n===22) return {raw:raw,ruling:22,label:'22/4'};
+ return {raw:raw,ruling:n,label:String(n)};
+}
+function countsOf(p){
+ const raw=padDate(p); const counts={0:0,1:0,2:0,3:0,4:0,5:0,6:0,7:0,8:0,9:0};
+ for(var i=0;i<raw.length;i++) counts[Number(raw[i])]++;
+ return counts;
+}
+function lineState(counts,line){
+ const present=line.nums.filter(function(n){return counts[n]>0}).length;
+ return present===3?'strength':present===0?'empty':'partial';
+}
+function chartOf(p){
+ const counts=countsOf(p); const ruling=rulingOf(p);
+ const arrows=LINES.map(function(line){
+  return Object.assign({},line,{state:lineState(counts,line),score:line.nums.reduce(function(a,n){return a+counts[n]},0)});
+ });
+ return {p:p,counts:counts,ruling:ruling,arrows:arrows};
+}
+function stack(n,c){return c?String(n).repeat(c):'\u2014'}
+function renderGrid(el,counts){
+ el.innerHTML=ORDER.map(function(n){
+  const c=counts[n];
+  return '<div class="cell '+(c?'hot':'empty')+'"><span class="n">'+stack(n,c)+'</span><span class="q">'+(c?c+' in square '+n:'empty '+n)+'</span></div>';
+ }).join('');
+}
+function renderPlanes(el,chart){
+ const rows=PLANES6.map(function(id){return chart.arrows.filter(function(a){return a.id===id})[0]});
+ const max=Math.max(1, Math.max.apply(null, rows.map(function(a){return a.score})));
+ el.innerHTML=rows.map(function(a){
+  return '<div class="bar"><span>'+a.plane+'</span><div class="track"><div class="fill" style="width:'+Math.round(a.score/max*100)+'%"></div></div><span>'+a.score+'</span></div>';
+ }).join('');
+}
+function renderReading(chart){
+ const strength=chart.arrows.filter(function(a){return a.state==='strength'});
+ const empty=chart.arrows.filter(function(a){return a.state==='empty'});
+ const r=chart.ruling;
+ var html='<p><b>Ruling Number '+r.label+'</b> \u00b7 sum '+r.raw+'. '+(RULING[r.ruling]||'')+'</p>';
+ html+='<p class="kicker">Arrows of Strength</p>';
+ html+=strength.length?strength.map(function(a){return '<span class="chip good">'+a.strength+'</span>'}).join(''):'<span class="chip">No complete strength arrows.</span>';
+ html+='<p class="kicker">Arrows of Emptiness</p>';
+ html+=empty.length?empty.map(function(a){return '<span class="chip lesson">'+a.empty+'</span>'}).join(''):'<span class="chip">No empty arrows.</span>';
+ strength.forEach(function(a){html+='<h3>'+a.strength+'</h3><p>The '+a.nums.join('-')+' line is complete. A fluent gift on the '+a.plane+' line.</p>'});
+ empty.forEach(function(a){html+='<h3>'+a.empty+'</h3><p>The '+a.nums.join('-')+' line is empty. A lesson, not a sentence.</p>'});
+ html+='<h3>Your numbers</h3>';
+ for(var n=1;n<=9;n++){
+  const c=chart.counts[n]; const m=MEANING[n];
+  html+='<p><b>'+(c?String(n).repeat(c):'No '+n)+'</b> \u2014 '+m.name+'. '+(c?m.t:'This square is empty, so the quality is learned.')+'</p>';
+ }
+ document.getElementById('numbers').innerHTML=html;
+}
+function showChart(chart){
+ document.getElementById('resultCard').hidden=false;
+ document.getElementById('resultTitle').textContent=chart.p.label;
+ document.getElementById('resultMeta').textContent='Digits placed, zeros ignored. Calculated only in this browser.';
+ renderGrid(document.getElementById('grid'),chart.counts);
+ renderPlanes(document.getElementById('planes'),chart);
+ renderReading(chart);
+ document.getElementById('resultCard').scrollIntoView({behavior:'smooth'});
+ try{localStorage.setItem('numera-plus-last',JSON.stringify(chart.p))}catch(e){}
+}
+function decodeSelf(){
+ const p=currentDate();
+ if(!p){alert('Enter a full birth date first.');return;}
+ showChart(chartOf(p));
+}
+function loadExample(){
+ setMode('manual');
+ document.getElementById('dd').value='29';
+ document.getElementById('mm').value='11';
+ document.getElementById('yyyy').value='1968';
+ document.getElementById('dob').value='1968-11-29';
+ showChart(chartOf({d:29,m:11,y:1968,label:'29/11/1968'}));
+}
+function compareCharts(){
+ const a=fromPicker('dobA'), b=fromPicker('dobB');
+ if(!a||!b){alert('Choose two dates to compare.');return;}
+ const A=chartOf(a), B=chartOf(b);
+ function setOf(chart,state){return chart.arrows.filter(function(x){return x.state===state}).map(function(x){return x.id})}
+ function names(id){return LINES.filter(function(l){return l.id===id})[0]}
+ const sA=setOf(A,'strength'), sB=setOf(B,'strength'), eA=setOf(A,'empty'), eB=setOf(B,'empty');
+ document.getElementById('compareOut').innerHTML='<div class="compare"><div><p><b>'+A.p.label+'</b> \u00b7 Ruling '+A.ruling.label+'</p><div class="grid" id="gA"></div></div><div><p><b>'+B.p.label+'</b> \u00b7 Ruling '+B.ruling.label+'</p><div class="grid" id="gB"></div></div></div><p><b>Shared strengths:</b> '+(sA.filter(function(id){return sB.indexOf(id)>=0}).map(function(id){return names(id).strength}).join(', ')||'none')+'</p><p><b>Shared lessons:</b> '+(eA.filter(function(id){return eB.indexOf(id)>=0}).map(function(id){return names(id).empty}).join(', ')||'none')+'</p>';
+ renderGrid(document.getElementById('gA'),A.counts);
+ renderGrid(document.getElementById('gB'),B.counts);
+}
+setMode('picker');
+try{
+ const last=JSON.parse(localStorage.getItem('numera-plus-last')||'null');
+ if(last) document.getElementById('dob').value=last.y+'-'+String(last.m).padStart(2,'0')+'-'+String(last.d).padStart(2,'0');
+}catch(e){}
+if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
+</script>
+</body></html>
