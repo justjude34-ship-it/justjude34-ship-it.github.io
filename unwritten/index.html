@@ -49,6 +49,9 @@ textarea{width:100%;min-height:7.2rem;border:0;border-radius:1.1rem;padding:1rem
 .row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
 #notes{background:#fff;color:#111;min-height:100dvh}
 #notes textarea{background:#f7f7f7;color:#111}
+a.tap{display:flex;justify-content:space-between;align-items:center;gap:.7rem;text-decoration:none;color:var(--ink);background:var(--cream);border-radius:.95rem;padding:.8rem .9rem;margin:.4rem 0}
+a.tap b{font-weight:600;font-size:.92rem;line-height:1.25}
+a.tap span{color:var(--gold);font-weight:600;font-size:.88rem;white-space:nowrap}
 </style>
 </head>
 <body>
@@ -68,6 +71,7 @@ textarea{width:100%;min-height:7.2rem;border:0;border-radius:1.1rem;padding:1rem
   <button class="block" data-go="exit"><b>Way out</b><span>Exit Map</span></button>
   <button class="block" data-go="garden"><b>Garden</b><span>What is growing</span></button>
   <button class="block" data-go="breathe"><b>Breathe</b><span>Thirty seconds</span></button>
+  <button class="block" data-go="help"><b>Help</b><span>Helplines you can tap</span></button>
 </section>
 
 <section id="detect" class="screen">
@@ -115,7 +119,59 @@ textarea{width:100%;min-height:7.2rem;border:0;border-radius:1.1rem;padding:1rem
   <div class="breath" aria-hidden="true"></div>
   <p class="line" style="text-align:center">In for four. Hold. Out for six.</p>
   <div class="card"><h3>Five things</h3><p class="muted">See five. Touch four. Hear three. Soften two. Name one true thing from your Anchor.</p></div>
-  <div class="card"><h3>If you are in danger</h3><p class="muted">AU 000 · 1800RESPECT 1800 737 732<br/>US 911 · 1-800-799-7233<br/>UK 999 · 0808 2000 247</p></div>
+  <div class="card"><h3>If you are in danger</h3><p class="muted">AU 000 · 1800RESPECT 1800 737 732<br/>US 911 · 1-800-799-7233<br/>UK 999 · 0808 2000 247</p><p><button class="ghost" data-go="help" type="button">All helplines</button></p></div>
+  <p class="tiny">Unwritten is a companion, not therapy and not a diagnosis.</p>
+</section>
+
+<section id="help" class="screen">
+  <header class="top"><p class="brand" style="font-size:1.6rem">Help</p></header>
+  <p class="muted">If you are in immediate danger, call your local emergency number.</p>
+
+  <div class="card">
+    <h3>Australia</h3>
+    <a class="tap" href="tel:000"><b>Emergency</b><span>000</span></a>
+    <a class="tap" href="tel:131114"><b>Lifeline</b><span>13 11 14</span></a>
+    <a class="tap" href="tel:1300224636"><b>Beyond Blue</b><span>1300 22 4636</span></a>
+    <a class="tap" href="tel:1800737732"><b>1800RESPECT</b><span>1800 737 732</span></a>
+    <a class="tap" href="tel:1300659467"><b>Suicide Call Back Service</b><span>1300 659 467</span></a>
+    <a class="tap" href="tel:139276"><b>13YARN</b><span>13 92 76</span></a>
+    <a class="tap" href="tel:1300657380"><b>Blue Knot Foundation</b><span>1300 657 380</span></a>
+  </div>
+
+  <div class="card">
+    <h3>United States</h3>
+    <a class="tap" href="tel:911"><b>Emergency</b><span>911</span></a>
+    <a class="tap" href="tel:988"><b>988 Suicide and Crisis Lifeline</b><span>Call 988</span></a>
+    <a class="tap" href="sms:988"><b>988 Suicide and Crisis Lifeline</b><span>Text 988</span></a>
+    <a class="tap" href="sms:741741?body=HOME"><b>Crisis Text Line</b><span>Text HOME to 741741</span></a>
+    <a class="tap" href="tel:18007997233"><b>National Domestic Violence Hotline</b><span>1-800-799-7233</span></a>
+    <a class="tap" href="sms:88788?body=START"><b>National Domestic Violence Hotline</b><span>Text START to 88788</span></a>
+    <a class="tap" href="tel:18006564673"><b>RAINN</b><span>1-800-656-4673</span></a>
+  </div>
+
+  <div class="card">
+    <h3>United Kingdom</h3>
+    <a class="tap" href="tel:999"><b>Emergency</b><span>999</span></a>
+    <a class="tap" href="tel:116123"><b>Samaritans</b><span>116 123</span></a>
+    <a class="tap" href="sms:85258?body=SHOUT"><b>Shout</b><span>Text SHOUT to 85258</span></a>
+    <a class="tap" href="tel:08082000247"><b>National Domestic Abuse Helpline</b><span>0808 2000 247</span></a>
+  </div>
+
+  <div class="card">
+    <h3>Canada</h3>
+    <a class="tap" href="tel:911"><b>Emergency</b><span>911</span></a>
+    <a class="tap" href="tel:988"><b>9-8-8 Suicide Crisis Helpline</b><span>Call 988</span></a>
+    <a class="tap" href="sms:988"><b>9-8-8 Suicide Crisis Helpline</b><span>Text 988</span></a>
+    <a class="tap" href="tel:18006686868"><b>Kids Help Phone</b><span>1-800-668-6868</span></a>
+    <a class="tap" href="sms:686868?body=CONNECT"><b>Kids Help Phone</b><span>Text CONNECT to 686868</span></a>
+    <a class="tap" href="tel:18552423310"><b>Hope for Wellness</b><span>1-855-242-3310</span></a>
+    <a class="tap" href="https://sheltersafe.ca" target="_blank" rel="noopener"><b>Local shelters</b><span>sheltersafe.ca</span></a>
+  </div>
+
+  <div class="card">
+    <h3>Other countries</h3>
+    <a class="tap" href="https://findahelpline.com" target="_blank" rel="noopener"><b>Find A Helpline</b><span>findahelpline.com</span></a>
+  </div>
   <p class="tiny">Unwritten is a companion, not therapy and not a diagnosis.</p>
 </section>
 
@@ -131,6 +187,7 @@ textarea{width:100%;min-height:7.2rem;border:0;border-radius:1.1rem;padding:1rem
   <button data-go="thread">Thread</button>
   <button data-go="garden">Garden</button>
   <button data-go="breathe">Breathe</button>
+  <button data-go="help">Help</button>
 </nav>
 
 <script>
@@ -155,7 +212,7 @@ const go=id=>{
   document.getElementById(id).classList.add("on");
   const nav=document.getElementById("nav");
   nav.hidden=id==="cover"||id==="notes";
-  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.go===id||(id!=="home"&&id!=="detect"&&id!=="thread"&&id!=="garden"&&id!=="breathe"&&b.dataset.go==="home")));
+  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.go===id||(id!=="home"&&id!=="detect"&&id!=="thread"&&id!=="garden"&&id!=="breathe"&&id!=="help"&&b.dataset.go==="home")));
   if(id==="garden")renderGarden();
   if(id==="thread")renderKnots();
   if(id==="beads")renderBeads();
@@ -202,10 +259,10 @@ function renderBeads(){document.getElementById("beadLog").innerHTML=db.get("uw-b
 document.querySelectorAll(".step").forEach(b=>b.onclick=()=>{const s=db.get("uw-steps",[]);if(!s.includes(b.dataset.step))s.push(b.dataset.step);db.set("uw-steps",s);b.textContent="On your thread";});
 function renderGarden(){
   const n=db.get("uw-detects",[]).length+db.get("uw-beads",[]).length+db.get("uw-knots",[]).length+db.get("uw-steps",[]).length;
-  const plants=["\ud83c\udf3f","\ud83c\udf3b","\ud83c\udf37","\ud83c\udf3c","\ud83c\udf31","\ud83c\udf3a"];
+  const plants=["🌿","🌻","🌷","🌼","🌱","🌺"];
   document.getElementById("sprouts").innerHTML=Array.from({length:Math.min(18,Math.max(1,n))},(_,i)=>`<span class="sprout">${plants[i%plants.length]}</span>`).join("");
   const words=db.get("uw-beads",[]).slice(0,6).map(x=>x.txt.split(" ").slice(0,5).join(" "));
-  document.getElementById("stars").innerHTML=words.map(w=>`\u2726 ${w}`).join("<br>");
+  document.getElementById("stars").innerHTML=words.map(w=>`✦ ${w}`).join("<br>");
 }
 if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js");
 </script>
