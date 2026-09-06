@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#1c1814">
+<meta http-equiv="Cache-Control" content="no-cache">
+<title>Kitchen Organiser</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#f3ece1;--mute:#cbbba6;--gold:#d4b483;--deep:#1c1814;--card:#2a241e;--line:#3b332b}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--deep);color:var(--ink)}
+body{font-family:Nunito,system-ui,sans-serif;line-height:1.5;min-height:100vh}
+.hero{position:relative;min-height:58vh;display:flex;align-items:flex-end;background:#111 url("https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,24,20,.15),rgba(28,24,20,.82) 70%,#1c1814)}
+.hero-inner{position:relative;z-index:1;padding:28px 20px 22px;max-width:640px;margin:0 auto;width:100%}
+.tiny{letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-size:.72rem;font-weight:700;margin:0 0 10px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:2.5rem;line-height:1.08;margin:0 0 10px}
+.lede{color:var(--mute);margin:0 0 18px;font-size:1.05rem}
+main{max-width:640px;margin:0 auto;padding:8px 18px 72px}
+.choice,.panel{width:100%;background:var(--card);border:1px solid var(--line);border-radius:18px;color:inherit}
+.choice{display:block;text-align:left;padding:16px;margin:0 0 10px;font:inherit}
+.choice strong{display:block;font-size:1.08rem;margin-bottom:3px}
+.choice span{color:var(--mute);font-size:.95rem}
+.pill,.ghost{display:block;width:100%;text-align:center;border-radius:999px;padding:15px;font:inherit;font-weight:700}
+.pill{background:var(--gold);color:#2a2116;border:0}
+.ghost{background:transparent;color:var(--gold);border:1px solid #5a4c3a;margin-top:8px}
+.panel{padding:16px;margin:0 0 12px}
+.label{color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-weight:700;margin:0 0 8px}
+.check{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{width:22px;height:22px;accent-color:var(--gold);margin-top:2px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const S={time:null,pets:null,problem:null};
+const problems={bench:{title:"The bench is always buried",blurb:"Post, mugs, food and tools live on the worktop.",session:"Landing strip"},pantry:{title:"There is no real pantry",blurb:"Food is stacked, lost, and bought twice.",session:"Food home"},deep:{title:"Deep cupboards swallow things",blurb:"The back is a graveyard of tins and gadgets.",session:"Reach and see"},small:{title:"The kitchen is too small",blurb:"No spare floor, no spare bench.",session:"Height first"},stuff:{title:"There is simply too much",blurb:"Cupboards are full and still overflowing.",session:"One category"}};
+function plans(){
+  const short=S.time==="10",pets=S.pets==="yes";
+  const extra=pets?" Leave a clear floor path for bowls and paws.":"";
+  const map={bench:{why:"A bench is a landing strip, not a cupboard."+extra,avoid:"Do not empty every cupboard today.",now:short?["Set a ten-minute timer.","Clear ONE stretch of bench.","Put back only the kettle and one daily tool.","Drop the rest in a box marked Later."]:["Set a twenty-minute timer.","Clear the whole main bench.","Sort: daily / elsewhere / leave.","Put back kettle plus one daily tool."],next:"Keep that stretch empty through one meal tomorrow.",buy:"A shallow tray and one utensil crock."},pantry:{why:"Food needs one home."+extra,avoid:"Do not buy a pantry unit today.",now:short?["Pick one food-only cupboard.","Bin expired packets.","Group breakfast, cooking, snacks.","Labels facing you."]:["Empty the best food cupboard.","Bin expired food.","Zone breakfast / cooking / snacks.","Daily food at eye level."],next:"Only restock that cupboard tomorrow.",buy:"Later: pull-out rack, baskets, or a lazy susan."},deep:{why:"Deep shelves fail at the back."+extra,avoid:"Do not stack taller.",now:short?["Open the worst deep cupboard.","Take out the front row only.","Everyday items at the front.","Bulk to the side, not behind."]:["Empty one deep cupboard.","Weekly-use at the front.","Rare items up or out.","Add a tray or turntable if you have one."],next:"Use that cupboard once tomorrow.",buy:"A pull-out tray or lazy susan."},small:{why:"Small kitchens fail when we add more floor furniture."+extra,avoid:"No extra trolley until the walls work.",now:short?["Look up for empty wall or fridge-top.","Clear one bench stretch.","Move one rarely used appliance off the bench."]:["Map work, storage, landing, maintenance.","Clear the work stretch.","Move rarely used tools up or out."],next:"Cook one simple meal on the cleared stretch.",buy:"One slim wall shelf or rail."},stuff:{why:"You cannot organise volume you do not need."+extra,avoid:"No whole-room purge.",now:short?["One category only: mugs, containers, or lids.","Keep what you used this week.","The rest goes in a Decide box."]:["One category.","A week's worth stays.","Leave-the-house pile by the door.","Do not start category two."],next:"Open the Decide box in seven days.",buy:"Nothing until that box has been emptied once."}};
+  const p=map[S.problem]; if(pets) p.now=p.now.concat(["Keep pet bowls off the cleared bench."]); return p;
+}
+function go(n){render(n);window.scrollTo(0,0)}
+function choices(arr){return arr.map(x=>`<button class=\"choice\" data-v=\"${x.v}\"><strong>${x.t}</strong><span>${x.s}</span></button>`).join("")}
+function render(name){
+  const root=document.getElementById("app");
+  if(name==="home"){
+    root.innerHTML=`<section class=\"hero\"><div class=\"hero-inner\"><p class=\"tiny\">Kitchen visit</p><h1>Make the bench breathe again.</h1><p class=\"lede\">A professional visit. One hard spot. Then we stop.</p><button class=\"pill\" id=\"start\">Begin the visit</button></div></section>`;
+    document.getElementById("start").onclick=()=>go("time"); return;
+  }
+  let inner="";
+  if(name==="time") inner=`<p class=\"tiny\">Step 1 of 3</p><h1>How long have you got?</h1><p class=\"lede\">Finished beats heroic.</p>`+choices([{v:"10",t:"Ten minutes",s:"One stretch of bench or one cupboard."},{v:"20",t:"Twenty minutes",s:"Still one zone."}]);
+  if(name==="pets") inner=`<p class=\"tiny\">Step 2 of 3</p><h1>Do the animals use this kitchen?</h1>`+choices([{v:"yes",t:"Yes",s:"Clear floor path and a pet-food home."},{v:"no",t:"Not today",s:"We can use the floor edge."}]);
+  if(name==="problem") inner=`<p class=\"tiny\">Step 3 of 3</p><h1>What is hardest right now?</h1>`+Object.keys(problems).map(id=>`<button class=\"choice\" data-v=\"${id}\"><strong>${problems[id].title}</strong><span>${problems[id].blurb}</span></button>`).join("");
+  if(name==="plan"){
+    const p=plans(),meta=problems[S.problem];
+    inner=`<p class=\"tiny\">${meta.session}</p><h1>${meta.title}</h1><div class=\"panel\"><p class=\"label\">This session</p>${p.now.map(s=>`<label class=\"check\"><input type=\"checkbox\"><span>${s}</span></label>`).join("")}</div><div class=\"panel\"><p class=\"label\">Why this works</p><p>${p.why}</p></div><div class=\"panel\"><p class=\"label\">Do not do this</p><p>${p.avoid}</p></div><div class=\"panel\"><p class=\"label\">Tomorrow</p><p>${p.next}</p></div><button class=\"pill\" id=\"enough\">That is enough for today</button>`;
+  }
+  if(name==="done") inner=`<p class=\"tiny\">Session closed</p><h1>Stop while it still feels possible.</h1><button class=\"pill\" id=\"home\">Back to the start</button>`;
+  if(name!=="home") root.innerHTML=`<main>${inner}</main>`;
+  if(name==="time") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.time=b.dataset.v;go("pets")});
+  if(name==="pets") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.pets=b.dataset.v;go("problem")});
+  if(name==="problem") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.v;go("plan")});
+  if(name==="plan") document.getElementById("enough").onclick=()=>go("done");
+  if(name==="done") document.getElementById("home").onclick=()=>go("home");
+}
+render("home");
+</script>
+</body>
+</html>
