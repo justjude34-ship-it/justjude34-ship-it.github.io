@@ -1,154 +1,204 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-AU">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#2f5d43">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <title>Kitchen Organiser</title>
-  <style>
-    :root {
-      --bg: #f3eee4;
-      --ink: #2a231c;
-      --muted: #5d5449;
-      --green: #2f5d43;
-      --green-soft: #e4efe8;
-      --card: #fffdf8;
-      --line: #d7cdbc;
-    }
-    * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; }
-    body {
-      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-      background: var(--bg);
-      color: var(--ink);
-      line-height: 1.5;
-      padding: 20px 16px 56px;
-    }
-    main { max-width: 640px; margin: 0 auto; }
-    .eyebrow {
-      color: var(--green);
-      font-size: 0.82rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin: 0 0 8px;
-    }
-    h1 { font-size: 1.85rem; line-height: 1.15; margin: 0 0 10px; }
-    .lead { color: var(--muted); font-size: 1.08rem; margin: 0 0 20px; }
-    .choice {
-      width: 100%;
-      text-align: left;
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px 16px 15px;
-      margin: 0 0 10px;
-      font: inherit;
-      color: inherit;
-    }
-    .choice strong { display: block; font-size: 1.12rem; margin-bottom: 4px; }
-    .choice span { color: var(--muted); font-size: 0.98rem; }
-    .choice:active { background: var(--green-soft); }
-    .back {
-      background: none;
-      border: 0;
-      color: var(--green);
-      font: inherit;
-      font-weight: 700;
-      padding: 0 0 16px;
-    }
-    .block {
-      background: var(--card);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 16px;
-      margin: 0 0 12px;
-    }
-    .block h2 {
-      font-size: 1.02rem;
-      color: var(--green);
-      margin: 0 0 8px;
-    }
-    .block p, .block li { margin: 0 0 8px; font-size: 1.05rem; }
-    .block ol, .block ul { margin: 0; padding-left: 1.15rem; }
-    .block li:last-child, .block p:last-child { margin-bottom: 0; }
-    .hidden { display: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#24382c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>Kitchen Organiser</title>
+<style>
+:root{--bg:#efe7d8;--bg2:#e4d8c4;--ink:#1f1a14;--muted:#5c5348;--card:#fffaf2;--line:#d4c6ae;--sage:#2c4a38;--sage2:#3d6b4f;--gold:#b0894a;--soft:#e8f0ea}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;overflow-x:hidden}
+body{font-family:Georgia,"Iowan Old Style",serif;background:linear-gradient(180deg,var(--bg),var(--bg2) 40%,var(--bg));color:var(--ink);line-height:1.5;min-height:100vh}
+main{max-width:640px;margin:0 auto;padding:22px 16px 72px}
+.mark{width:42px;height:42px;border-radius:14px;background:var(--sage);color:#f6f0e4;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-weight:800;letter-spacing:.04em;font-size:.78rem;margin-bottom:16px}
+.eyebrow{font-family:system-ui,sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);font-weight:700;margin:0 0 8px}
+h1{font-size:2rem;line-height:1.12;margin:0 0 12px;font-weight:700}
+.lede{font-size:1.12rem;color:var(--muted);margin:0 0 22px}
+.card,.choice,.chip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
+.choice,.chip,.primary,.ghost{width:100%;text-align:left;border-radius:16px;cursor:pointer}
+.choice{display:block;background:var(--card);border:1px solid var(--line);padding:16px;margin:0 0 10px;color:inherit;box-shadow:0 8px 24px rgba(31,26,20,.05)}
+.choice strong{display:block;font-size:1.12rem;margin-bottom:4px}
+.choice span{color:var(--muted);font-size:.98rem}
+.choice:active{transform:scale(.99);background:var(--soft)}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.chip{width:auto;border:1px solid var(--line);background:var(--card);padding:12px 14px;font-size:1rem;color:var(--ink)}
+.chip.on{background:var(--sage);color:#fff;border-color:var(--sage)}
+.primary,.ghost{text-align:center;font-weight:700;font-size:1.05rem;padding:15px;border:0;margin-top:8px}
+.primary{background:var(--sage);color:#fff}
+.ghost{background:transparent;color:var(--sage)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 0 12px;box-shadow:0 10px 28px rgba(31,26,20,.06)}
+.panel h2{font-family:Georgia,serif;font-size:1.2rem;margin:0 0 8px}
+.label{font-family:system-ui,sans-serif;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);font-weight:700;margin:0 0 8px}
+.panel p,.panel li{margin:0 0 8px;font-size:1.05rem}
+.panel ol,.panel ul{margin:0;padding-left:1.15rem}
+.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-family:system-ui,sans-serif;font-size:1.05rem}
+.check:first-of-type{border-top:0}
+.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--sage)}
+.check.done span{text-decoration:line-through;color:var(--muted)}
+.progress{height:6px;background:#e3d8c6;border-radius:99px;overflow:hidden;margin:0 0 18px}
+.progress>i{display:block;height:100%;width:0;background:var(--sage2)}
+.hidden{display:none}
+</style>
 </head>
 <body>
-  <main>
-    <section id="home">
-      <p class="eyebrow">Professional organiser</p>
-      <h1>What is hardest in the kitchen right now?</h1>
-      <p class="lead">Tap one. I will give you the first ten minutes, why it works, and what to buy later — not a shopping list first.</p>
-      <button class="choice" data-id="bench"><strong>The bench is always buried</strong><span>Mugs, post, food and tools live on the worktop.</span></button>
-      <button class="choice" data-id="pantry"><strong>There is no pantry</strong><span>Food is stacked in cupboards and gets lost.</span></button>
-      <button class="choice" data-id="deep"><strong>Deep cupboards I cannot reach</strong><span>The back is a graveyard of tins and gadgets.</span></button>
-      <button class="choice" data-id="small"><strong>The kitchen is too small</strong><span>No spare floor, no spare bench, everything fights.</span></button>
-      <button class="choice" data-id="stuff"><strong>Too much stuff</strong><span>Duplicates, rarely used tools, no homes.</span></button>
-    </section>
+<main>
+  <div class="progress"><i id="bar"></i></div>
+  <div id="screen"></div>
+</main>
+<script>
+const S = { time:null, pets:null, problem:null, ticks:{} };
+const problems = {
+  bench:{ title:"The bench is always buried", blurb:"Post, mugs, food and tools live on the worktop.", session:"Landing strip" },
+  pantry:{ title:"There is no real pantry", blurb:"Food is stacked, lost, and bought twice.", session:"Food home" },
+  deep:{ title:"Deep cupboards swallow things", blurb:"The back is a graveyard of tins and gadgets.", session:"Reach and see" },
+  small:{ title:"The kitchen is too small", blurb:"No spare floor, no spare bench.", session:"Height first" },
+  stuff:{ title:"There is simply too much", blurb:"Cupboards are full and still overflowing.", session:"One category" }
+};
 
-    <section id="plan" class="hidden"></section>
-  </main>
-  <script>
-    var plans = {
-      bench: {
-        title: "Clear the bench first",
-        minutes: ["Set a timer for ten minutes. Do not empty the whole kitchen.", "Take everything off the bench onto a tray or the table.", "Put back only the kettle and one tool you use every day.", "Give the rest a temporary home in one box labelled Later."],
-        why: "A bench is a landing strip, not storage. If it stays clear, cooking feels possible again. Everything else can wait.",
-        buy: "A shallow tray for incoming post and keys, and one utensil crock. Buy containers after the bench stays clear for three days."
-      },
-      pantry: {
-        title: "Make a pantry without building one",
-        minutes: ["Pick one cupboard that will be food only.", "Pull everything out. Bin expired packets without debating them.", "Group breakfast, cooking, and snacks into three piles.", "Put the three groups back as three zones, labels facing you."],
-        why: "Food needs a home of its own. When breakfast lives together, you stop buying duplicates and stop losing bags at the back.",
-        buy: "Later: a narrow pull-out rack, two or three baskets, and a lazy susan for the corner. Not today."
-      },
-      deep: {
-        title: "Stop losing the back of the cupboard",
-        minutes: ["Open the worst deep cupboard.", "Take out only the front row.", "Put everyday items back at the front.", "Park bulk and rarely used things to one side, not behind the daily stuff."],
-        why: "Deep cupboards fail because the back becomes a graveyard. If you cannot see it, you will buy it again.",
-        buy: "Later: a pull-out tray or turntable. That one fitting does more than a new set of containers."
-      },
-      small: {
-        title: "Use height, not more furniture",
-        minutes: ["Look up. Find one empty strip of wall or the space above the fridge.", "Move one daily item to eye level.", "Move one rarely used item up high or out of the kitchen.", "Leave the floor and bench alone for now."],
-        why: "In a small kitchen the floor is already full. Vertical space is the only free room you have.",
-        buy: "Later: one set of adjustable shelves or a slim wall rack. Do not add another trolley until the bench is clear."
-      },
-      stuff: {
-        title: "Give things a job or let them leave",
-        minutes: ["Choose one category only: mugs, containers, or gadgets.", "Keep the ones you used this week.", "Put the rest in a box marked Decide next week.", "Do not start a second category today."],
-        why: "Too much stuff is usually too many homes that were never assigned. One category at a time beats a whole-room purge.",
-        buy: "Later: nothing until the Decide box has been emptied once. Then buy only what gives a home to what you kept."
-      }
-    };
-
-    function show(id) {
-      var p = plans[id];
-      var steps = p.minutes.map(function (s) { return "<li>" + s + "</li>"; }).join("");
-      document.getElementById("home").classList.add("hidden");
-      var plan = document.getElementById("plan");
-      plan.classList.remove("hidden");
-      plan.innerHTML =
-        "<button class=\"back\" id=\"back\">← Choose another problem</button>" +
-        "<p class=\"eyebrow\">Kitchen plan</p>" +
-        "<h1>" + p.title + "</h1>" +
-        "<div class=\"block\"><h2>First ten minutes</h2><ol>" + steps + "</ol></div>" +
-        "<div class=\"block\"><h2>Why this works</h2><p>" + p.why + "</p></div>" +
-        "<div class=\"block\"><h2>What to buy later</h2><p>" + p.buy + "</p></div>";
-      document.getElementById("back").onclick = function () {
-        plan.classList.add("hidden");
-        document.getElementById("home").classList.remove("hidden");
-        window.scrollTo(0, 0);
-      };
-      window.scrollTo(0, 0);
+function plans(){
+  const short = S.time === "10";
+  const pets = S.pets === "yes";
+  const extraPet = pets ? " Leave a clear floor path for bowls and paws. Pet food gets its own bin or basket, not the bench." : "";
+  const map = {
+    bench:{
+      why:"A bench is a landing strip, not a cupboard. If objects have no home, they return here by dinner. Clear bench first so the room can think.",
+      avoid:"Do not empty every cupboard today. That is how sessions collapse.",
+      now: short
+        ? ["Set a ten-minute timer.","Take everything off ONE stretch of bench.","Put back only the kettle and one daily tool.","Drop the rest in a box marked Later."]
+        : ["Set a twenty-minute timer.","Clear the whole main bench onto the table.","Sort: daily / belongs elsewhere / leave the house.","Put back kettle plus one daily tool.","Walk the elsewhere pile to its rooms."],
+      next:"Tomorrow, do not start a new project. Just keep that stretch of bench empty while you make one meal.",
+      buy:"A shallow tray for post and keys. One crock for utensils. No container set until the bench stays clear for three days."
+    },
+    pantry:{
+      why:"Food needs one home. When breakfast, cooking and snacks are mixed, you lose packets and buy duplicates.",
+      avoid:"Do not buy a pantry unit today. Use a cupboard you already have.",
+      now: short
+        ? ["Pick one cupboard that will be food only.","Pull it out. Bin anything expired without a debate.","Make three groups: breakfast, cooking, snacks.","Put groups back with labels facing you."]
+        : ["Pick the best food cupboard.","Empty it completely.","Bin expired food.","Zone breakfast / cooking / snacks.","Daily food at eye level. Bulk up high."],
+      next:"Tomorrow, only restock that one cupboard. Do not start the next cupboard until this one stays usable.",
+      buy:"Later: pull-out rack, two baskets, or a lazy susan. Measure width and depth first."
+    },
+    deep:{
+      why:"Deep shelves fail because arms and eyes cannot use the back. The front stays messy because the back is forgotten.",
+      avoid:"Do not stack taller. Height without a pull-out just hides more.",
+      now: short
+        ? ["Open the worst deep cupboard.","Take out only the front row.","Everyday items back at the front.","Park bulk to one side, not behind daily food."]
+        : ["Empty one deep cupboard onto the table.","Keep weekly-use at the front.","Rare items up high or out.","Put a tray or turntable in so the back can slide to you."],
+      next:"Use that cupboard once tomorrow and notice if you can see everything without kneeling.",
+      buy:"A pull-out tray or lazy susan sized to the shelf. Measure before you shop."
+    },
+    small:{
+      why:"Small kitchens fail when we add more floor furniture. Height and daily-only rules beat another trolley.",
+      avoid:"Do not buy an island or extra cart until the walls are working.",
+      now: short
+        ? ["Look up. Find empty space above the fridge or a free wall strip.","Clear one stretch of bench completely.","Move one rarely used appliance off the bench."]
+        : ["Map four jobs: work, storage, landing, maintenance.","Clear the work stretch of bench.","Move rarely used appliances up or out.","Keep only daily tools at arm reach."],
+      next:"Cook one simple meal using only the cleared stretch. If you need something, it does not yet have a home.",
+      buy:"One slim wall shelf or rail. Measure twice. Walls before trolleys."
+    },
+    stuff:{
+      why:"You cannot organise volume you do not need. Full cupboards just become tidy piles of too much.",
+      avoid:"No whole-room purge. That is how overwhelm wins.",
+      now: short
+        ? ["Choose one category: mugs, containers, or takeaway lids.","Keep what you used this week.","The rest goes in a Decide box.","Stop when the timer ends."]
+        : ["One category only.","Keep a normal week's worth.","Leave-the-house pile by the door.","Give keepers one home.","Do not start category two."],
+      next:"Open the Decide box in seven days. If you did not miss it, it leaves.",
+      buy:"Nothing until the Decide box has been emptied once. Empty space is the product."
     }
+  };
+  const p = map[S.problem];
+  if (pets) {
+    p.now = p.now.concat(["Keep pet bowls and food off the cleared bench. Give them a floor zone that does not block walking."]);
+  }
+  p.why += extraPet;
+  return p;
+}
 
-    document.querySelectorAll(".choice").forEach(function (btn) {
-      btn.onclick = function () { show(btn.getAttribute("data-id")); };
+function setBar(n){ document.getElementById("bar").style.width = n + "%"; }
+function go(name){ history.pushState({name}, ""); render(name); }
+window.onpopstate = function(e){ render(e.state && e.state.name ? e.state.name : "home"); };
+
+function render(name){
+  const el = document.getElementById("screen");
+  if(name==="home"){
+    setBar(12);
+    el.innerHTML = `<p class="eyebrow">Professional organiser</p>
+      <div class="mark">KO</div>
+      <h1>I will not tidy the whole kitchen today.</h1>
+      <p class="lede">A real organiser starts with one hard spot, one short session, and a home for what stays. Tap through. No typing needed.</p>
+      <button class="primary" id="start">Start a kitchen session</button>`;
+    document.getElementById("start").onclick = ()=>go("time");
+    return;
+  }
+  if(name==="time"){
+    setBar(28);
+    el.innerHTML = `<p class="eyebrow">Step 1 of 3</p><h1>How long have you got?</h1>
+      <p class="lede">Shorter is better. Finished beats heroic.</p>
+      <button class="choice" data-v="10"><strong>Ten minutes</strong><span>One stretch of bench or one cupboard.</span></button>
+      <button class="choice" data-v="20"><strong>Twenty minutes</strong><span>Still one zone. Just a little more sorting.</span></button>`;
+    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.time=b.dataset.v;go("pets");});
+    return;
+  }
+  if(name==="pets"){
+    setBar(46);
+    el.innerHTML = `<p class="eyebrow">Step 2 of 3</p><h1>Do pets use this kitchen?</h1>
+      <p class="lede">Bowls, food and traffic change the plan.</p>
+      <button class="choice" data-v="yes"><strong>Yes</strong><span>Keep a clear floor path and a pet-food home.</span></button>
+      <button class="choice" data-v="no"><strong>No</strong><span>We can use the floor edge if needed.</span></button>`;
+    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.pets=b.dataset.v;go("problem");});
+    return;
+  }
+  if(name==="problem"){
+    setBar(64);
+    el.innerHTML = `<p class="eyebrow">Step 3 of 3</p><h1>What is hardest right now?</h1>
+      <p class="lede">Pick the thing that nags you every time you walk in.</p>` +
+      Object.keys(problems).map(id=>`<button class="choice" data-id="${id}"><strong>${problems[id].title}</strong><span>${problems[id].blurb}</span></button>`).join("");
+    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.id;S.ticks={};go("plan");});
+    return;
+  }
+  if(name==="plan"){
+    setBar(100);
+    const p = plans();
+    const meta = problems[S.problem];
+    const key = S.problem+":"+S.time+":"+S.pets;
+    const saved = JSON.parse(localStorage.getItem("ko-ticks")||"{}")[key]||{};
+    el.innerHTML = `<p class="eyebrow">${meta.session} · ${S.time} minutes${S.pets==="yes"?" · pets": ""}</p>
+      <h1>${p === plans() ? meta.title : meta.title}</h1>
+      <p class="lede">Do the list. Stop when the time ends. That is a real session.</p>
+      <div class="panel"><p class="label">First session</p>${p.now.map((s,i)=>`<label class="check ${saved[i]?"done":""}"><input type="checkbox" data-i="${i}" ${saved[i]?"checked":""}><span>${s}</span></label>`).join("")}</div>
+      <div class="panel"><p class="label">Why this works</p><p>${p.why}</p></div>
+      <div class="panel"><p class="label">Do not do this</p><p>${p.avoid}</p></div>
+      <div class="panel"><p class="label">Tomorrow</p><p>${p.next}</p></div>
+      <div class="panel"><p class="label">Buy later, not first</p><p>${p.buy}</p></div>
+      <button class="primary" id="enough">That is enough for today</button>
+      <button class="ghost" id="again">Choose a different problem</button>`;
+    el.querySelectorAll("input[type=checkbox]").forEach(box=>{
+      box.onchange=()=>{
+        const wrap=box.closest(".check");
+        wrap.classList.toggle("done", box.checked);
+        const all=JSON.parse(localStorage.getItem("ko-ticks")||"{}");
+        all[key]=all[key]||{};
+        all[key][box.dataset.i]=box.checked;
+        localStorage.setItem("ko-ticks", JSON.stringify(all));
+      };
     });
-  </script>
+    document.getElementById("enough").onclick=()=>go("done");
+    document.getElementById("again").onclick=()=>go("problem");
+    return;
+  }
+  if(name==="done"){
+    setBar(100);
+    el.innerHTML = `<p class="eyebrow">Session closed</p>
+      <h1>Stop while it still feels possible.</h1>
+      <p class="lede">Ten or twenty minutes is enough. Come back tomorrow and tap the next hard spot. That is how a kitchen actually changes.</p>
+      <div class="panel"><p class="label">Remember</p><p>Do not reward a good session by starting a second room tonight.</p></div>
+      <button class="primary" id="home">Back to the start</button>`;
+    document.getElementById("home").onclick=()=>go("home");
+  }
+}
+render("home");
+</script>
 </body>
 </html>
