@@ -3,74 +3,152 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#2f5d43">
+  <meta name="apple-mobile-web-app-capable" content="yes">
   <title>Kitchen Organiser</title>
   <style>
+    :root {
+      --bg: #f3eee4;
+      --ink: #2a231c;
+      --muted: #5d5449;
+      --green: #2f5d43;
+      --green-soft: #e4efe8;
+      --card: #fffdf8;
+      --line: #d7cdbc;
+    }
     * { box-sizing: border-box; }
-    html, body { margin: 0; padding: 0; max-width: 100%; overflow-x: hidden; }
-    body { font-family: system-ui, -apple-system, "Segoe UI", sans-serif; background: #f6f1e8; color: #2c241b; line-height: 1.55; padding: 20px 16px 40px; }
-    main { width: 100%; max-width: 640px; margin: 0 auto; }
-    h1 { font-size: 1.7rem; margin: 8px 0 10px; line-height: 1.2; overflow-wrap: anywhere; }
-    .hint { color: #5b5146; font-size: 1.05rem; margin: 0 0 16px; overflow-wrap: break-word; }
-    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 14px; }
-    .chip { border: 1px solid #c9bba8; background: #fff; color: #3a3229; border-radius: 999px; padding: 8px 12px; font-size: 0.95rem; cursor: pointer; }
-    textarea { width: 100%; min-height: 140px; padding: 12px; font-size: 1.05rem; line-height: 1.4; border: 1px solid #c9bba8; border-radius: 12px; background: #fff; color: #2c241b; resize: vertical; }
-    button.primary { display: block; width: 100%; margin-top: 12px; padding: 14px 16px; font-size: 1.1rem; font-weight: 600; border: 0; border-radius: 12px; background: #3d6b4f; color: #fff; cursor: pointer; }
-    button.primary:active { background: #2f5440; }
-    #advice { margin-top: 18px; }
-    .card { background: #fff; border-radius: 12px; padding: 14px 16px; margin-bottom: 10px; overflow-wrap: break-word; }
-    .card strong { display: block; margin-bottom: 4px; color: #3d6b4f; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      line-height: 1.5;
+      padding: 20px 16px 56px;
+    }
+    main { max-width: 640px; margin: 0 auto; }
+    .eyebrow {
+      color: var(--green);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+    }
+    h1 { font-size: 1.85rem; line-height: 1.15; margin: 0 0 10px; }
+    .lead { color: var(--muted); font-size: 1.08rem; margin: 0 0 20px; }
+    .choice {
+      width: 100%;
+      text-align: left;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px 16px 15px;
+      margin: 0 0 10px;
+      font: inherit;
+      color: inherit;
+    }
+    .choice strong { display: block; font-size: 1.12rem; margin-bottom: 4px; }
+    .choice span { color: var(--muted); font-size: 0.98rem; }
+    .choice:active { background: var(--green-soft); }
+    .back {
+      background: none;
+      border: 0;
+      color: var(--green);
+      font: inherit;
+      font-weight: 700;
+      padding: 0 0 16px;
+    }
+    .block {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 16px;
+      margin: 0 0 12px;
+    }
+    .block h2 {
+      font-size: 1.02rem;
+      color: var(--green);
+      margin: 0 0 8px;
+    }
+    .block p, .block li { margin: 0 0 8px; font-size: 1.05rem; }
+    .block ol, .block ul { margin: 0; padding-left: 1.15rem; }
+    .block li:last-child, .block p:last-child { margin-bottom: 0; }
+    .hidden { display: none; }
   </style>
 </head>
 <body>
   <main>
-    <h1>Kitchen Organiser</h1>
-    <p class="hint">Type what is hard about your kitchen. Then tap Get advice.</p>
-    <div class="chips">
-      <button type="button" class="chip" data-text="small kitchen, no pantry">small, no pantry</button>
-      <button type="button" class="chip" data-text="cluttered bench">cluttered bench</button>
-      <button type="button" class="chip" data-text="deep cabinets I cannot reach the back of">deep cabinets</button>
-      <button type="button" class="chip" data-text="too much stuff, no zones">too much stuff</button>
-    </div>
-    <textarea id="problem" placeholder="Example: small kitchen, no pantry, cluttered bench"></textarea>
-    <button type="button" class="primary" onclick="getAdvice()">Get advice</button>
-    <div id="advice"></div>
+    <section id="home">
+      <p class="eyebrow">Professional organiser</p>
+      <h1>What is hardest in the kitchen right now?</h1>
+      <p class="lead">Tap one. I will give you the first ten minutes, why it works, and what to buy later — not a shopping list first.</p>
+      <button class="choice" data-id="bench"><strong>The bench is always buried</strong><span>Mugs, post, food and tools live on the worktop.</span></button>
+      <button class="choice" data-id="pantry"><strong>There is no pantry</strong><span>Food is stacked in cupboards and gets lost.</span></button>
+      <button class="choice" data-id="deep"><strong>Deep cupboards I cannot reach</strong><span>The back is a graveyard of tins and gadgets.</span></button>
+      <button class="choice" data-id="small"><strong>The kitchen is too small</strong><span>No spare floor, no spare bench, everything fights.</span></button>
+      <button class="choice" data-id="stuff"><strong>Too much stuff</strong><span>Duplicates, rarely used tools, no homes.</span></button>
+    </section>
+
+    <section id="plan" class="hidden"></section>
   </main>
   <script>
-    document.querySelectorAll(".chip").forEach(function (chip) {
-      chip.addEventListener("click", function () {
-        var box = document.getElementById("problem");
-        var extra = chip.getAttribute("data-text");
-        box.value = box.value ? box.value + ", " + extra : extra;
-        box.focus();
-      });
-    });
-    function getAdvice() {
-      var text = document.getElementById("problem").value.toLowerCase();
-      var out = [];
-      if (text.includes("small") || text.includes("tiny") || text.includes("no space")) {
-        out.push(["Small space", "Use vertical space first. Add adjustable shelves so every centimetre of height works."]);
+    var plans = {
+      bench: {
+        title: "Clear the bench first",
+        minutes: ["Set a timer for ten minutes. Do not empty the whole kitchen.", "Take everything off the bench onto a tray or the table.", "Put back only the kettle and one tool you use every day.", "Give the rest a temporary home in one box labelled Later."],
+        why: "A bench is a landing strip, not storage. If it stays clear, cooking feels possible again. Everything else can wait.",
+        buy: "A shallow tray for incoming post and keys, and one utensil crock. Buy containers after the bench stays clear for three days."
+      },
+      pantry: {
+        title: "Make a pantry without building one",
+        minutes: ["Pick one cupboard that will be food only.", "Pull everything out. Bin expired packets without debating them.", "Group breakfast, cooking, and snacks into three piles.", "Put the three groups back as three zones, labels facing you."],
+        why: "Food needs a home of its own. When breakfast lives together, you stop buying duplicates and stop losing bags at the back.",
+        buy: "Later: a narrow pull-out rack, two or three baskets, and a lazy susan for the corner. Not today."
+      },
+      deep: {
+        title: "Stop losing the back of the cupboard",
+        minutes: ["Open the worst deep cupboard.", "Take out only the front row.", "Put everyday items back at the front.", "Park bulk and rarely used things to one side, not behind the daily stuff."],
+        why: "Deep cupboards fail because the back becomes a graveyard. If you cannot see it, you will buy it again.",
+        buy: "Later: a pull-out tray or turntable. That one fitting does more than a new set of containers."
+      },
+      small: {
+        title: "Use height, not more furniture",
+        minutes: ["Look up. Find one empty strip of wall or the space above the fridge.", "Move one daily item to eye level.", "Move one rarely used item up high or out of the kitchen.", "Leave the floor and bench alone for now."],
+        why: "In a small kitchen the floor is already full. Vertical space is the only free room you have.",
+        buy: "Later: one set of adjustable shelves or a slim wall rack. Do not add another trolley until the bench is clear."
+      },
+      stuff: {
+        title: "Give things a job or let them leave",
+        minutes: ["Choose one category only: mugs, containers, or gadgets.", "Keep the ones you used this week.", "Put the rest in a box marked Decide next week.", "Do not start a second category today."],
+        why: "Too much stuff is usually too many homes that were never assigned. One category at a time beats a whole-room purge.",
+        buy: "Later: nothing until the Decide box has been emptied once. Then buy only what gives a home to what you kept."
       }
-      if (text.includes("pantry") || text.includes("no pantry")) {
-        out.push(["No pantry", "Use a pull-out pantry, baskets, and a lazy susan in the corner so food is not lost at the back."]);
-      }
-      if (text.includes("clutter") || text.includes("cluttered") || text.includes("bench") || text.includes("counter") || text.includes("stuff")) {
-        out.push(["Cluttered surfaces", "Clear the bench first. Keep only daily tools out. Use one-in-one-out so clutter does not creep back."]);
-      }
-      if (text.includes("cabinet") || text.includes("storage") || text.includes("deep") || text.includes("reach")) {
-        out.push(["Cabinets", "Choose deep, wide cabinets with adjustable shelves. Put everyday items at the front, not the back."]);
-      }
-      if (text.includes("zone") || text.includes("workflow") || text.includes("work")) {
-        out.push(["Zones", "Give the kitchen four jobs: work, storage, landing, and maintenance. Keep like with like."]);
-      }
-      if (out.length === 0) {
-        out.push(["Need a bit more", "Say if it is small, missing a pantry, cluttered, or hard to reach. I will match that to the rules and products."]);
-      }
-      var html = "";
-      for (var i = 0; i < out.length; i++) {
-        html += "<div class=\"card\"><strong>" + out[i][0] + "</strong>" + out[i][1] + "</div>";
-      }
-      document.getElementById("advice").innerHTML = html;
+    };
+
+    function show(id) {
+      var p = plans[id];
+      var steps = p.minutes.map(function (s) { return "<li>" + s + "</li>"; }).join("");
+      document.getElementById("home").classList.add("hidden");
+      var plan = document.getElementById("plan");
+      plan.classList.remove("hidden");
+      plan.innerHTML =
+        "<button class=\"back\" id=\"back\">← Choose another problem</button>" +
+        "<p class=\"eyebrow\">Kitchen plan</p>" +
+        "<h1>" + p.title + "</h1>" +
+        "<div class=\"block\"><h2>First ten minutes</h2><ol>" + steps + "</ol></div>" +
+        "<div class=\"block\"><h2>Why this works</h2><p>" + p.why + "</p></div>" +
+        "<div class=\"block\"><h2>What to buy later</h2><p>" + p.buy + "</p></div>";
+      document.getElementById("back").onclick = function () {
+        plan.classList.add("hidden");
+        document.getElementById("home").classList.remove("hidden");
+        window.scrollTo(0, 0);
+      };
+      window.scrollTo(0, 0);
     }
+
+    document.querySelectorAll(".choice").forEach(function (btn) {
+      btn.onclick = function () { show(btn.getAttribute("data-id")); };
+    });
   </script>
 </body>
 </html>
