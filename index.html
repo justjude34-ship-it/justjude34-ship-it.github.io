@@ -3,52 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#24382c">
+<meta name="theme-color" content="#f4efe6">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Kitchen Organiser</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#efe7d8;--bg2:#e4d8c4;--ink:#1f1a14;--muted:#5c5348;--card:#fffaf2;--line:#d4c6ae;--sage:#2c4a38;--sage2:#3d6b4f;--gold:#b0894a;--soft:#e8f0ea}
+:root{
+  --cream:#f4efe6; --ink:#3a342c; --sage:#6f7f6c; --deep:#3f4d3d;
+  --gold:#c4a574; --paper:#fffaf3; --soft:#8a8174; --line:#e2d6c2;
+}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;overflow-x:hidden}
-body{font-family:Georgia,"Iowan Old Style",serif;background:linear-gradient(180deg,var(--bg),var(--bg2) 40%,var(--bg));color:var(--ink);line-height:1.5;min-height:100vh}
-main{max-width:640px;margin:0 auto;padding:22px 16px 72px}
-.mark{width:42px;height:42px;border-radius:14px;background:var(--sage);color:#f6f0e4;display:flex;align-items:center;justify-content:center;font-family:system-ui,sans-serif;font-weight:800;letter-spacing:.04em;font-size:.78rem;margin-bottom:16px}
-.eyebrow{font-family:system-ui,sans-serif;font-size:.78rem;letter-spacing:.12em;text-transform:uppercase;color:var(--sage);font-weight:700;margin:0 0 8px}
-h1{font-size:2rem;line-height:1.12;margin:0 0 12px;font-weight:700}
-.lede{font-size:1.12rem;color:var(--muted);margin:0 0 22px}
-.card,.choice,.chip{font-family:system-ui,-apple-system,"Segoe UI",sans-serif}
-.choice,.chip,.primary,.ghost{width:100%;text-align:left;border-radius:16px;cursor:pointer}
-.choice{display:block;background:var(--card);border:1px solid var(--line);padding:16px;margin:0 0 10px;color:inherit;box-shadow:0 8px 24px rgba(31,26,20,.05)}
-.choice strong{display:block;font-size:1.12rem;margin-bottom:4px}
-.choice span{color:var(--muted);font-size:.98rem}
-.choice:active{transform:scale(.99);background:var(--soft)}
-.row{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-.chip{width:auto;border:1px solid var(--line);background:var(--card);padding:12px 14px;font-size:1rem;color:var(--ink)}
-.chip.on{background:var(--sage);color:#fff;border-color:var(--sage)}
-.primary,.ghost{text-align:center;font-weight:700;font-size:1.05rem;padding:15px;border:0;margin-top:8px}
-.primary{background:var(--sage);color:#fff}
-.ghost{background:transparent;color:var(--sage)}
-.panel{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin:0 0 12px;box-shadow:0 10px 28px rgba(31,26,20,.06)}
-.panel h2{font-family:Georgia,serif;font-size:1.2rem;margin:0 0 8px}
-.label{font-family:system-ui,sans-serif;font-size:.75rem;letter-spacing:.08em;text-transform:uppercase;color:var(--sage);font-weight:700;margin:0 0 8px}
-.panel p,.panel li{margin:0 0 8px;font-size:1.05rem}
-.panel ol,.panel ul{margin:0;padding-left:1.15rem}
-.check{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-top:1px solid var(--line);font-family:system-ui,sans-serif;font-size:1.05rem}
-.check:first-of-type{border-top:0}
-.check input{width:22px;height:22px;margin-top:2px;accent-color:var(--sage)}
-.check.done span{text-decoration:line-through;color:var(--muted)}
-.progress{height:6px;background:#e3d8c6;border-radius:99px;overflow:hidden;margin:0 0 18px}
-.progress>i{display:block;height:100%;width:0;background:var(--sage2)}
+html,body{margin:0;padding:0}
+body{
+  min-height:100vh;
+  color:var(--ink);
+  background:
+    radial-gradient(900px 420px at 80% -10%, rgba(196,165,116,.18), transparent 55%),
+    linear-gradient(180deg,#f7f2e9 0%, var(--cream) 42%, #eadfcb 100%);
+  font-family:Nunito,system-ui,sans-serif;
+  line-height:1.5;
+}
+main{max-width:640px;margin:0 auto;padding:28px 18px 72px}
+.thread{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 22px}
+.brand{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:1.05rem; letter-spacing:.18em; text-transform:uppercase;
+  color:var(--sage); margin:0 0 6px;
+}
+.tiny{font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:700; margin:0 0 14px}
+h1{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-weight:500; font-size:2.35rem; line-height:1.12; margin:0 0 12px;
+}
+.lede{color:var(--soft); font-size:1.05rem; margin:0 0 24px}
+.choice,.panel{
+  background:var(--paper);
+  border:1px solid var(--line);
+  border-radius:1.2rem;
+  box-shadow:0 10px 28px rgba(90,70,40,.07);
+}
+.choice{
+  display:block; width:100%; text-align:left; color:inherit;
+  padding:16px 16px 15px; margin:0 0 10px; font:inherit;
+}
+.choice strong{display:block; font-size:1.08rem; font-weight:700; margin-bottom:3px}
+.choice span{display:block; color:var(--soft); font-size:.95rem}
+.choice:active{transform:translateY(1px); background:#f6efe2}
+.pill,.ghost{
+  display:block; width:100%; text-align:center; border-radius:999px;
+  padding:.95rem 1.3rem; font:inherit; font-weight:700; font-size:1.05rem;
+}
+.pill{background:var(--gold); color:#2d261c; border:0; margin-top:8px}
+.ghost{background:transparent; color:var(--deep); border:1px solid #d9cbb3; margin-top:8px}
+.panel{padding:16px; margin:0 0 12px}
+.label{
+  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--sage); font-weight:700; margin:0 0 8px;
+}
+.panel h2{
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:1.35rem; font-weight:500; margin:0 0 8px;
+}
+.panel p{margin:0; color:var(--ink)}
+.check{
+  display:flex; gap:12px; align-items:flex-start;
+  padding:12px 0; border-top:1px solid var(--line); font-size:1.02rem;
+}
+.check:first-of-type{border-top:0; padding-top:2px}
+.check input{width:22px; height:22px; margin-top:2px; accent-color:var(--sage)}
+.check.done span{text-decoration:line-through; color:var(--soft)}
+.progress{height:3px; background:#e5d8c3; border-radius:99px; overflow:hidden; margin:0 0 22px}
+.progress>i{display:block; height:100%; width:8%; background:var(--gold)}
+.mark{
+  width:54px; height:54px; border-radius:18px; margin:0 0 18px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--deep); color:#f6f0e4;
+  font-family:"Cormorant Garamond",Georgia,serif; font-size:1.35rem;
+}
 .hidden{display:none}
 </style>
 </head>
 <body>
 <main>
+  <div class="thread"></div>
   <div class="progress"><i id="bar"></i></div>
   <div id="screen"></div>
 </main>
 <script>
-const S = { time:null, pets:null, problem:null, ticks:{} };
+const S = { time:null, pets:null, problem:null };
 const problems = {
   bench:{ title:"The bench is always buried", blurb:"Post, mugs, food and tools live on the worktop.", session:"Landing strip" },
   pantry:{ title:"There is no real pantry", blurb:"Food is stacked, lost, and bought twice.", session:"Food home" },
@@ -56,85 +99,79 @@ const problems = {
   small:{ title:"The kitchen is too small", blurb:"No spare floor, no spare bench.", session:"Height first" },
   stuff:{ title:"There is simply too much", blurb:"Cupboards are full and still overflowing.", session:"One category" }
 };
-
 function plans(){
   const short = S.time === "10";
   const pets = S.pets === "yes";
-  const extraPet = pets ? " Leave a clear floor path for bowls and paws. Pet food gets its own bin or basket, not the bench." : "";
+  const extraPet = pets ? " Leave a clear floor path for bowls and paws. Pet food gets its own bin, not the bench." : "";
   const map = {
     bench:{
-      why:"A bench is a landing strip, not a cupboard. If objects have no home, they return here by dinner. Clear bench first so the room can think.",
+      why:"A bench is a landing strip, not a cupboard. If objects have no home, they return here by dinner."+extraPet,
       avoid:"Do not empty every cupboard today. That is how sessions collapse.",
       now: short
         ? ["Set a ten-minute timer.","Take everything off ONE stretch of bench.","Put back only the kettle and one daily tool.","Drop the rest in a box marked Later."]
         : ["Set a twenty-minute timer.","Clear the whole main bench onto the table.","Sort: daily / belongs elsewhere / leave the house.","Put back kettle plus one daily tool.","Walk the elsewhere pile to its rooms."],
-      next:"Tomorrow, do not start a new project. Just keep that stretch of bench empty while you make one meal.",
+      next:"Tomorrow, keep that stretch of bench empty while you make one meal.",
       buy:"A shallow tray for post and keys. One crock for utensils. No container set until the bench stays clear for three days."
     },
     pantry:{
-      why:"Food needs one home. When breakfast, cooking and snacks are mixed, you lose packets and buy duplicates.",
+      why:"Food needs one home. When breakfast, cooking and snacks are mixed, you lose packets and buy duplicates."+extraPet,
       avoid:"Do not buy a pantry unit today. Use a cupboard you already have.",
       now: short
         ? ["Pick one cupboard that will be food only.","Pull it out. Bin anything expired without a debate.","Make three groups: breakfast, cooking, snacks.","Put groups back with labels facing you."]
         : ["Pick the best food cupboard.","Empty it completely.","Bin expired food.","Zone breakfast / cooking / snacks.","Daily food at eye level. Bulk up high."],
-      next:"Tomorrow, only restock that one cupboard. Do not start the next cupboard until this one stays usable.",
+      next:"Tomorrow, only restock that one cupboard.",
       buy:"Later: pull-out rack, two baskets, or a lazy susan. Measure width and depth first."
     },
     deep:{
-      why:"Deep shelves fail because arms and eyes cannot use the back. The front stays messy because the back is forgotten.",
+      why:"Deep shelves fail because arms and eyes cannot use the back."+extraPet,
       avoid:"Do not stack taller. Height without a pull-out just hides more.",
       now: short
         ? ["Open the worst deep cupboard.","Take out only the front row.","Everyday items back at the front.","Park bulk to one side, not behind daily food."]
         : ["Empty one deep cupboard onto the table.","Keep weekly-use at the front.","Rare items up high or out.","Put a tray or turntable in so the back can slide to you."],
-      next:"Use that cupboard once tomorrow and notice if you can see everything without kneeling.",
+      next:"Use that cupboard once tomorrow and notice if you can see everything.",
       buy:"A pull-out tray or lazy susan sized to the shelf. Measure before you shop."
     },
     small:{
-      why:"Small kitchens fail when we add more floor furniture. Height and daily-only rules beat another trolley.",
+      why:"Small kitchens fail when we add more floor furniture. Height beats another trolley."+extraPet,
       avoid:"Do not buy an island or extra cart until the walls are working.",
       now: short
         ? ["Look up. Find empty space above the fridge or a free wall strip.","Clear one stretch of bench completely.","Move one rarely used appliance off the bench."]
         : ["Map four jobs: work, storage, landing, maintenance.","Clear the work stretch of bench.","Move rarely used appliances up or out.","Keep only daily tools at arm reach."],
-      next:"Cook one simple meal using only the cleared stretch. If you need something, it does not yet have a home.",
+      next:"Cook one simple meal using only the cleared stretch.",
       buy:"One slim wall shelf or rail. Measure twice. Walls before trolleys."
     },
     stuff:{
-      why:"You cannot organise volume you do not need. Full cupboards just become tidy piles of too much.",
+      why:"You cannot organise volume you do not need."+extraPet,
       avoid:"No whole-room purge. That is how overwhelm wins.",
       now: short
         ? ["Choose one category: mugs, containers, or takeaway lids.","Keep what you used this week.","The rest goes in a Decide box.","Stop when the timer ends."]
         : ["One category only.","Keep a normal week's worth.","Leave-the-house pile by the door.","Give keepers one home.","Do not start category two."],
       next:"Open the Decide box in seven days. If you did not miss it, it leaves.",
-      buy:"Nothing until the Decide box has been emptied once. Empty space is the product."
+      buy:"Nothing until the Decide box has been emptied once."
     }
   };
   const p = map[S.problem];
-  if (pets) {
-    p.now = p.now.concat(["Keep pet bowls and food off the cleared bench. Give them a floor zone that does not block walking."]);
-  }
-  p.why += extraPet;
+  if (pets) p.now = p.now.concat(["Keep pet bowls and food off the cleared bench."]);
   return p;
 }
-
 function setBar(n){ document.getElementById("bar").style.width = n + "%"; }
-function go(name){ history.pushState({name}, ""); render(name); }
-window.onpopstate = function(e){ render(e.state && e.state.name ? e.state.name : "home"); };
-
+function go(name){ render(name); window.scrollTo(0,0); }
 function render(name){
   const el = document.getElementById("screen");
   if(name==="home"){
-    setBar(12);
-    el.innerHTML = `<p class="eyebrow">Professional organiser</p>
-      <div class="mark">KO</div>
-      <h1>I will not tidy the whole kitchen today.</h1>
-      <p class="lede">A real organiser starts with one hard spot, one short session, and a home for what stays. Tap through. No typing needed.</p>
-      <button class="primary" id="start">Start a kitchen session</button>`;
+    setBar(10);
+    el.innerHTML = `<p class="tiny">Kitchen visit</p>
+      <div class="mark">Ko</div>
+      <p class="brand">Grok Organiser</p>
+      <h1>A quiet professional, in the room with you.</h1>
+      <p class="lede">One hard spot. One short session. A home for what stays. No lecture, and no shopping list first.</p>
+      <button class="pill" id="start">Begin the visit</button>`;
     document.getElementById("start").onclick = ()=>go("time");
     return;
   }
   if(name==="time"){
     setBar(28);
-    el.innerHTML = `<p class="eyebrow">Step 1 of 3</p><h1>How long have you got?</h1>
+    el.innerHTML = `<p class="tiny">Step 1 of 3</p><h1>How long have you got?</h1>
       <p class="lede">Shorter is better. Finished beats heroic.</p>
       <button class="choice" data-v="10"><strong>Ten minutes</strong><span>One stretch of bench or one cupboard.</span></button>
       <button class="choice" data-v="20"><strong>Twenty minutes</strong><span>Still one zone. Just a little more sorting.</span></button>`;
@@ -142,20 +179,20 @@ function render(name){
     return;
   }
   if(name==="pets"){
-    setBar(46);
-    el.innerHTML = `<p class="eyebrow">Step 2 of 3</p><h1>Do pets use this kitchen?</h1>
+    setBar(50);
+    el.innerHTML = `<p class="tiny">Step 2 of 3</p><h1>Do the animals use this kitchen?</h1>
       <p class="lede">Bowls, food and traffic change the plan.</p>
-      <button class="choice" data-v="yes"><strong>Yes</strong><span>Keep a clear floor path and a pet-food home.</span></button>
-      <button class="choice" data-v="no"><strong>No</strong><span>We can use the floor edge if needed.</span></button>`;
+      <button class="choice" data-v="yes"><strong>Yes</strong><span>A clear floor path and a pet-food home.</span></button>
+      <button class="choice" data-v="no"><strong>Not today</strong><span>We can use the floor edge if needed.</span></button>`;
     el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.pets=b.dataset.v;go("problem");});
     return;
   }
   if(name==="problem"){
-    setBar(64);
-    el.innerHTML = `<p class="eyebrow">Step 3 of 3</p><h1>What is hardest right now?</h1>
+    setBar(72);
+    el.innerHTML = `<p class="tiny">Step 3 of 3</p><h1>What is hardest right now?</h1>
       <p class="lede">Pick the thing that nags you every time you walk in.</p>` +
       Object.keys(problems).map(id=>`<button class="choice" data-id="${id}"><strong>${problems[id].title}</strong><span>${problems[id].blurb}</span></button>`).join("");
-    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.id;S.ticks={};go("plan");});
+    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.id;go("plan");});
     return;
   }
   if(name==="plan"){
@@ -164,23 +201,21 @@ function render(name){
     const meta = problems[S.problem];
     const key = S.problem+":"+S.time+":"+S.pets;
     const saved = JSON.parse(localStorage.getItem("ko-ticks")||"{}")[key]||{};
-    el.innerHTML = `<p class="eyebrow">${meta.session} · ${S.time} minutes${S.pets==="yes"?" · pets": ""}</p>
-      <h1>${p === plans() ? meta.title : meta.title}</h1>
-      <p class="lede">Do the list. Stop when the time ends. That is a real session.</p>
-      <div class="panel"><p class="label">First session</p>${p.now.map((s,i)=>`<label class="check ${saved[i]?"done":""}"><input type="checkbox" data-i="${i}" ${saved[i]?"checked":""}><span>${s}</span></label>`).join("")}</div>
-      <div class="panel"><p class="label">Why this works</p><p>${p.why}</p></div>
+    el.innerHTML = `<p class="tiny">${meta.session} · ${S.time} minutes${S.pets==="yes"?" · with the animals":""}</p>
+      <h1>${meta.title}</h1>
+      <p class="lede">Do the list. Stop when the time ends.</p>
+      <div class="panel"><p class="label">This session</p>${p.now.map((s,i)=>`<label class="check ${saved[i]?"done":""}"><input type="checkbox" data-i="${i}" ${saved[i]?"checked":""}><span>${s}</span></label>`).join("")}</div>
+      <div class="panel"><p class="label">Why this works</p><h2>Start here, not everywhere</h2><p>${p.why}</p></div>
       <div class="panel"><p class="label">Do not do this</p><p>${p.avoid}</p></div>
       <div class="panel"><p class="label">Tomorrow</p><p>${p.next}</p></div>
-      <div class="panel"><p class="label">Buy later, not first</p><p>${p.buy}</p></div>
-      <button class="primary" id="enough">That is enough for today</button>
+      <div class="panel"><p class="label">Buy later</p><p>${p.buy}</p></div>
+      <button class="pill" id="enough">That is enough for today</button>
       <button class="ghost" id="again">Choose a different problem</button>`;
     el.querySelectorAll("input[type=checkbox]").forEach(box=>{
       box.onchange=()=>{
-        const wrap=box.closest(".check");
-        wrap.classList.toggle("done", box.checked);
+        box.closest(".check").classList.toggle("done", box.checked);
         const all=JSON.parse(localStorage.getItem("ko-ticks")||"{}");
-        all[key]=all[key]||{};
-        all[key][box.dataset.i]=box.checked;
+        all[key]=all[key]||{}; all[key][box.dataset.i]=box.checked;
         localStorage.setItem("ko-ticks", JSON.stringify(all));
       };
     });
@@ -188,15 +223,12 @@ function render(name){
     document.getElementById("again").onclick=()=>go("problem");
     return;
   }
-  if(name==="done"){
-    setBar(100);
-    el.innerHTML = `<p class="eyebrow">Session closed</p>
-      <h1>Stop while it still feels possible.</h1>
-      <p class="lede">Ten or twenty minutes is enough. Come back tomorrow and tap the next hard spot. That is how a kitchen actually changes.</p>
-      <div class="panel"><p class="label">Remember</p><p>Do not reward a good session by starting a second room tonight.</p></div>
-      <button class="primary" id="home">Back to the start</button>`;
-    document.getElementById("home").onclick=()=>go("home");
-  }
+  el.innerHTML = `<p class="tiny">Session closed</p>
+    <h1>Stop while it still feels possible.</h1>
+    <p class="lede">Come back tomorrow and tap the next hard spot. That is how a kitchen actually changes.</p>
+    <div class="panel"><p class="label">Remember</p><p>Do not reward a good session by starting a second room tonight.</p></div>
+    <button class="pill" id="home">Back to the start</button>`;
+  document.getElementById("home").onclick=()=>go("home");
 }
 render("home");
 </script>
