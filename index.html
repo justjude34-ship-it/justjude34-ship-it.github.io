@@ -3,232 +3,109 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#f4efe6">
+<meta name="theme-color" content="#1c1814">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <title>Kitchen Organiser</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --cream:#f4efe6; --ink:#3a342c; --sage:#6f7f6c; --deep:#3f4d3d;
-  --gold:#c4a574; --paper:#fffaf3; --soft:#8a8174; --line:#e2d6c2;
-}
+:root{--ink:#f3ece1;--mute:#cbbba6;--gold:#d4b483;--deep:#1c1814;--card:#2a241e;--line:#3b332b;--sage:#9aa890}
 *{box-sizing:border-box}
-html,body{margin:0;padding:0}
-body{
-  min-height:100vh;
-  color:var(--ink);
-  background:
-    radial-gradient(900px 420px at 80% -10%, rgba(196,165,116,.18), transparent 55%),
-    linear-gradient(180deg,#f7f2e9 0%, var(--cream) 42%, #eadfcb 100%);
-  font-family:Nunito,system-ui,sans-serif;
-  line-height:1.5;
+html,body{margin:0;padding:0;background:var(--deep);color:var(--ink)}
+body{font-family:Nunito,system-ui,sans-serif;line-height:1.5;min-height:100vh}
+.hero{
+  position:relative;min-height:58vh;display:flex;align-items:flex-end;
+  background:#111 url("https://images.unsplash.com/photo-1556912173-3bb406ef7e77?auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
 }
-main{max-width:640px;margin:0 auto;padding:28px 18px 72px}
-.thread{height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 0 22px}
-.brand{
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:1.05rem; letter-spacing:.18em; text-transform:uppercase;
-  color:var(--sage); margin:0 0 6px;
-}
-.tiny{font-size:.78rem; letter-spacing:.16em; text-transform:uppercase; color:var(--gold); font-weight:700; margin:0 0 14px}
-h1{
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-weight:500; font-size:2.35rem; line-height:1.12; margin:0 0 12px;
-}
-.lede{color:var(--soft); font-size:1.05rem; margin:0 0 24px}
-.choice,.panel{
-  background:var(--paper);
-  border:1px solid var(--line);
-  border-radius:1.2rem;
-  box-shadow:0 10px 28px rgba(90,70,40,.07);
-}
-.choice{
-  display:block; width:100%; text-align:left; color:inherit;
-  padding:16px 16px 15px; margin:0 0 10px; font:inherit;
-}
-.choice strong{display:block; font-size:1.08rem; font-weight:700; margin-bottom:3px}
-.choice span{display:block; color:var(--soft); font-size:.95rem}
-.choice:active{transform:translateY(1px); background:#f6efe2}
-.pill,.ghost{
-  display:block; width:100%; text-align:center; border-radius:999px;
-  padding:.95rem 1.3rem; font:inherit; font-weight:700; font-size:1.05rem;
-}
-.pill{background:var(--gold); color:#2d261c; border:0; margin-top:8px}
-.ghost{background:transparent; color:var(--deep); border:1px solid #d9cbb3; margin-top:8px}
-.panel{padding:16px; margin:0 0 12px}
-.label{
-  font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
-  color:var(--sage); font-weight:700; margin:0 0 8px;
-}
-.panel h2{
-  font-family:"Cormorant Garamond",Georgia,serif;
-  font-size:1.35rem; font-weight:500; margin:0 0 8px;
-}
-.panel p{margin:0; color:var(--ink)}
-.check{
-  display:flex; gap:12px; align-items:flex-start;
-  padding:12px 0; border-top:1px solid var(--line); font-size:1.02rem;
-}
-.check:first-of-type{border-top:0; padding-top:2px}
-.check input{width:22px; height:22px; margin-top:2px; accent-color:var(--sage)}
-.check.done span{text-decoration:line-through; color:var(--soft)}
-.progress{height:3px; background:#e5d8c3; border-radius:99px; overflow:hidden; margin:0 0 22px}
-.progress>i{display:block; height:100%; width:8%; background:var(--gold)}
-.mark{
-  width:54px; height:54px; border-radius:18px; margin:0 0 18px;
-  display:flex; align-items:center; justify-content:center;
-  background:var(--deep); color:#f6f0e4;
-  font-family:"Cormorant Garamond",Georgia,serif; font-size:1.35rem;
-}
-.hidden{display:none}
+.hero:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(28,24,20,.15),rgba(28,24,20,.82) 70%, #1c1814)}
+.hero-inner{position:relative;z-index:1;padding:28px 20px 22px;max-width:640px;margin:0 auto;width:100%}
+.tiny{letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-size:.72rem;font-weight:700;margin:0 0 10px}
+h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:2.5rem;line-height:1.08;margin:0 0 10px}
+.lede{color:var(--mute);margin:0 0 18px;font-size:1.05rem}
+main{max-width:640px;margin:0 auto;padding:8px 18px 72px}
+.choice,.panel{width:100%;background:var(--card);border:1px solid var(--line);border-radius:18px;color:inherit}
+.choice{display:block;text-align:left;padding:16px;margin:0 0 10px;font:inherit}
+.choice strong{display:block;font-size:1.08rem;margin-bottom:3px}
+.choice span{color:var(--mute);font-size:.95rem}
+.pill,.ghost{display:block;width:100%;text-align:center;border-radius:999px;padding:15px;font:inherit;font-weight:700}
+.pill{background:var(--gold);color:#2a2116;border:0}
+.ghost{background:transparent;color:var(--gold);border:1px solid #5a4c3a;margin-top:8px}
+.panel{padding:16px;margin:0 0 12px}
+.label{color:var(--gold);letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;font-weight:700;margin:0 0 8px}
+.check{display:flex;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.check:first-of-type{border-top:0}
+.check input{width:22px;height:22px;accent-color:var(--gold);margin-top:2px}
+.check.done span{color:var(--mute);text-decoration:line-through}
 </style>
 </head>
 <body>
-<main>
-  <div class="thread"></div>
-  <div class="progress"><i id="bar"></i></div>
-  <div id="screen"></div>
-</main>
+<div id="app"></div>
 <script>
-const S = { time:null, pets:null, problem:null };
-const problems = {
-  bench:{ title:"The bench is always buried", blurb:"Post, mugs, food and tools live on the worktop.", session:"Landing strip" },
-  pantry:{ title:"There is no real pantry", blurb:"Food is stacked, lost, and bought twice.", session:"Food home" },
-  deep:{ title:"Deep cupboards swallow things", blurb:"The back is a graveyard of tins and gadgets.", session:"Reach and see" },
-  small:{ title:"The kitchen is too small", blurb:"No spare floor, no spare bench.", session:"Height first" },
-  stuff:{ title:"There is simply too much", blurb:"Cupboards are full and still overflowing.", session:"One category" }
+const S={time:null,pets:null,problem:null};
+const problems={
+  bench:{title:"The bench is always buried",blurb:"Post, mugs, food and tools live on the worktop.",session:"Landing strip"},
+  pantry:{title:"There is no real pantry",blurb:"Food is stacked, lost, and bought twice.",session:"Food home"},
+  deep:{title:"Deep cupboards swallow things",blurb:"The back is a graveyard of tins and gadgets.",session:"Reach and see"},
+  small:{title:"The kitchen is too small",blurb:"No spare floor, no spare bench.",session:"Height first"},
+  stuff:{title:"There is simply too much",blurb:"Cupboards are full and still overflowing.",session:"One category"}
 };
 function plans(){
-  const short = S.time === "10";
-  const pets = S.pets === "yes";
-  const extraPet = pets ? " Leave a clear floor path for bowls and paws. Pet food gets its own bin, not the bench." : "";
-  const map = {
-    bench:{
-      why:"A bench is a landing strip, not a cupboard. If objects have no home, they return here by dinner."+extraPet,
-      avoid:"Do not empty every cupboard today. That is how sessions collapse.",
-      now: short
-        ? ["Set a ten-minute timer.","Take everything off ONE stretch of bench.","Put back only the kettle and one daily tool.","Drop the rest in a box marked Later."]
-        : ["Set a twenty-minute timer.","Clear the whole main bench onto the table.","Sort: daily / belongs elsewhere / leave the house.","Put back kettle plus one daily tool.","Walk the elsewhere pile to its rooms."],
-      next:"Tomorrow, keep that stretch of bench empty while you make one meal.",
-      buy:"A shallow tray for post and keys. One crock for utensils. No container set until the bench stays clear for three days."
-    },
-    pantry:{
-      why:"Food needs one home. When breakfast, cooking and snacks are mixed, you lose packets and buy duplicates."+extraPet,
-      avoid:"Do not buy a pantry unit today. Use a cupboard you already have.",
-      now: short
-        ? ["Pick one cupboard that will be food only.","Pull it out. Bin anything expired without a debate.","Make three groups: breakfast, cooking, snacks.","Put groups back with labels facing you."]
-        : ["Pick the best food cupboard.","Empty it completely.","Bin expired food.","Zone breakfast / cooking / snacks.","Daily food at eye level. Bulk up high."],
-      next:"Tomorrow, only restock that one cupboard.",
-      buy:"Later: pull-out rack, two baskets, or a lazy susan. Measure width and depth first."
-    },
-    deep:{
-      why:"Deep shelves fail because arms and eyes cannot use the back."+extraPet,
-      avoid:"Do not stack taller. Height without a pull-out just hides more.",
-      now: short
-        ? ["Open the worst deep cupboard.","Take out only the front row.","Everyday items back at the front.","Park bulk to one side, not behind daily food."]
-        : ["Empty one deep cupboard onto the table.","Keep weekly-use at the front.","Rare items up high or out.","Put a tray or turntable in so the back can slide to you."],
-      next:"Use that cupboard once tomorrow and notice if you can see everything.",
-      buy:"A pull-out tray or lazy susan sized to the shelf. Measure before you shop."
-    },
-    small:{
-      why:"Small kitchens fail when we add more floor furniture. Height beats another trolley."+extraPet,
-      avoid:"Do not buy an island or extra cart until the walls are working.",
-      now: short
-        ? ["Look up. Find empty space above the fridge or a free wall strip.","Clear one stretch of bench completely.","Move one rarely used appliance off the bench."]
-        : ["Map four jobs: work, storage, landing, maintenance.","Clear the work stretch of bench.","Move rarely used appliances up or out.","Keep only daily tools at arm reach."],
-      next:"Cook one simple meal using only the cleared stretch.",
-      buy:"One slim wall shelf or rail. Measure twice. Walls before trolleys."
-    },
-    stuff:{
-      why:"You cannot organise volume you do not need."+extraPet,
-      avoid:"No whole-room purge. That is how overwhelm wins.",
-      now: short
-        ? ["Choose one category: mugs, containers, or takeaway lids.","Keep what you used this week.","The rest goes in a Decide box.","Stop when the timer ends."]
-        : ["One category only.","Keep a normal week's worth.","Leave-the-house pile by the door.","Give keepers one home.","Do not start category two."],
-      next:"Open the Decide box in seven days. If you did not miss it, it leaves.",
-      buy:"Nothing until the Decide box has been emptied once."
-    }
+  const short=S.time==="10", pets=S.pets==="yes";
+  const extra=pets?" Leave a clear floor path for bowls and paws. Pet food gets its own bin, not the bench.":"";
+  const map={
+    bench:{why:"A bench is a landing strip, not a cupboard."+extra,avoid:"Do not empty every cupboard today.",now:short?["Set a ten-minute timer.","Clear ONE stretch of bench.","Put back only the kettle and one daily tool.","Drop the rest in a box marked Later."]:["Set a twenty-minute timer.","Clear the whole main bench.","Sort: daily / belongs elsewhere / leave.","Put back kettle plus one daily tool."],next:"Keep that stretch empty through one meal tomorrow.",buy:"A shallow tray and one utensil crock. No container set yet."},
+    pantry:{why:"Food needs one home. Mixed shelves make you buy duplicates."+extra,avoid:"Do not buy a pantry unit today.",now:short?["Pick one food-only cupboard.","Bin expired packets without a debate.","Group breakfast, cooking, snacks.","Labels facing you."]:["Empty the best food cupboard.","Bin expired food.","Zone breakfast / cooking / snacks.","Daily food at eye level."],next:"Only restock that cupboard tomorrow.",buy:"Later: pull-out rack, baskets, or a lazy susan. Measure first."},
+    deep:{why:"Deep shelves fail at the back, not the door."+extra,avoid:"Do not stack taller.",now:short?["Open the worst deep cupboard.","Take out the front row only.","Everyday items at the front.","Bulk to the side, not behind."]:["Empty one deep cupboard.","Weekly-use at the front.","Rare items up or out.","Add a tray or turntable if you have one."],next:"Use that cupboard once tomorrow and notice if you can see everything.",buy:"A pull-out tray or lazy susan. Measure the shelf."},
+    small:{why:"Small kitchens fail when we add more floor furniture."+extra,avoid:"No extra trolley until the walls work.",now:short?["Look up for empty wall or fridge-top.","Clear one bench stretch.","Move one rarely used appliance off the bench."]:["Map work, storage, landing, maintenance.","Clear the work stretch.","Move rarely used tools up or out."],next:"Cook one simple meal on the cleared stretch.",buy:"One slim wall shelf or rail. Walls before trolleys."},
+    stuff:{why:"You cannot organise volume you do not need."+extra,avoid:"No whole-room purge.",now:short?["One category only: mugs, containers, or lids.","Keep what you used this week.","The rest goes in a Decide box."]:["One category.","A week's worth stays.","Leave-the-house pile by the door.","Do not start category two."],next:"Open the Decide box in seven days.",buy:"Nothing until that box has been emptied once."}
   };
-  const p = map[S.problem];
-  if (pets) p.now = p.now.concat(["Keep pet bowls and food off the cleared bench."]);
+  const p=map[S.problem];
+  if(pets) p.now=p.now.concat(["Keep pet bowls off the cleared bench."]);
   return p;
 }
-function setBar(n){ document.getElementById("bar").style.width = n + "%"; }
-function go(name){ render(name); window.scrollTo(0,0); }
+function go(n){render(n);window.scrollTo(0,0)}
+function choices(arr){return arr.map(x=>`<button class="choice" data-v="${x.v}"><strong>${x.t}</strong><span>${x.s}</span></button>`).join("")}
 function render(name){
-  const el = document.getElementById("screen");
+  const root=document.getElementById("app");
   if(name==="home"){
-    setBar(10);
-    el.innerHTML = `<p class="tiny">Kitchen visit</p>
-      <div class="mark">Ko</div>
-      <p class="brand">Grok Organiser</p>
-      <h1>A quiet professional, in the room with you.</h1>
-      <p class="lede">One hard spot. One short session. A home for what stays. No lecture, and no shopping list first.</p>
-      <button class="pill" id="start">Begin the visit</button>`;
-    document.getElementById("start").onclick = ()=>go("time");
+    root.innerHTML=`<section class="hero"><div class="hero-inner">
+      <p class="tiny">Kitchen visit</p>
+      <h1>Make the bench breathe again.</h1>
+      <p class="lede">A professional visit. One hard spot. Ten or twenty minutes. Then we stop.</p>
+      <button class="pill" id="start">Begin the visit</button>
+    </div></section>`;
+    document.getElementById("start").onclick=()=>go("time");
     return;
   }
-  if(name==="time"){
-    setBar(28);
-    el.innerHTML = `<p class="tiny">Step 1 of 3</p><h1>How long have you got?</h1>
-      <p class="lede">Shorter is better. Finished beats heroic.</p>
-      <button class="choice" data-v="10"><strong>Ten minutes</strong><span>One stretch of bench or one cupboard.</span></button>
-      <button class="choice" data-v="20"><strong>Twenty minutes</strong><span>Still one zone. Just a little more sorting.</span></button>`;
-    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.time=b.dataset.v;go("pets");});
-    return;
-  }
-  if(name==="pets"){
-    setBar(50);
-    el.innerHTML = `<p class="tiny">Step 2 of 3</p><h1>Do the animals use this kitchen?</h1>
-      <p class="lede">Bowls, food and traffic change the plan.</p>
-      <button class="choice" data-v="yes"><strong>Yes</strong><span>A clear floor path and a pet-food home.</span></button>
-      <button class="choice" data-v="no"><strong>Not today</strong><span>We can use the floor edge if needed.</span></button>`;
-    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.pets=b.dataset.v;go("problem");});
-    return;
-  }
-  if(name==="problem"){
-    setBar(72);
-    el.innerHTML = `<p class="tiny">Step 3 of 3</p><h1>What is hardest right now?</h1>
-      <p class="lede">Pick the thing that nags you every time you walk in.</p>` +
-      Object.keys(problems).map(id=>`<button class="choice" data-id="${id}"><strong>${problems[id].title}</strong><span>${problems[id].blurb}</span></button>`).join("");
-    el.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.id;go("plan");});
-    return;
-  }
+  let inner="";
+  if(name==="time") inner=`<p class="tiny">Step 1 of 3</p><h1>How long have you got?</h1><p class="lede">Finished beats heroic.</p>${choices([{v:"10",t:"Ten minutes",s:"One stretch of bench or one cupboard."},{v:"20",t:"Twenty minutes",s:"Still one zone. A little more sorting."}])}`;
+  if(name==="pets") inner=`<p class="tiny">Step 2 of 3</p><h1>Do the animals use this kitchen?</h1><p class="lede">Bowls and traffic change the plan.</p>${choices([{v:"yes",t:"Yes",s:"Clear floor path and a pet-food home."},{v:"no",t:"Not today",s:"We can use the floor edge if needed."}])}`;
+  if(name==="problem") inner=`<p class="tiny">Step 3 of 3</p><h1>What is hardest right now?</h1><p class="lede">Pick the thing that nags you when you walk in.</p>`+Object.keys(problems).map(id=>`<button class="choice" data-v="${id}"><strong>${problems[id].title}</strong><span>${problems[id].blurb}</span></button>`).join("");
   if(name==="plan"){
-    setBar(100);
-    const p = plans();
-    const meta = problems[S.problem];
-    const key = S.problem+":"+S.time+":"+S.pets;
-    const saved = JSON.parse(localStorage.getItem("ko-ticks")||"{}")[key]||{};
-    el.innerHTML = `<p class="tiny">${meta.session} · ${S.time} minutes${S.pets==="yes"?" · with the animals":""}</p>
-      <h1>${meta.title}</h1>
-      <p class="lede">Do the list. Stop when the time ends.</p>
+    const p=plans(), meta=problems[S.problem], key=S.problem+":"+S.time+":"+S.pets;
+    const saved=JSON.parse(localStorage.getItem("ko-ticks")||"{}")[key]||{};
+    inner=`<p class="tiny">${meta.session} · ${S.time} minutes</p><h1>${meta.title}</h1><p class="lede">Do the list. Stop when the time ends.</p>
       <div class="panel"><p class="label">This session</p>${p.now.map((s,i)=>`<label class="check ${saved[i]?"done":""}"><input type="checkbox" data-i="${i}" ${saved[i]?"checked":""}><span>${s}</span></label>`).join("")}</div>
-      <div class="panel"><p class="label">Why this works</p><h2>Start here, not everywhere</h2><p>${p.why}</p></div>
+      <div class="panel"><p class="label">Why this works</p><p>${p.why}</p></div>
       <div class="panel"><p class="label">Do not do this</p><p>${p.avoid}</p></div>
       <div class="panel"><p class="label">Tomorrow</p><p>${p.next}</p></div>
       <div class="panel"><p class="label">Buy later</p><p>${p.buy}</p></div>
       <button class="pill" id="enough">That is enough for today</button>
       <button class="ghost" id="again">Choose a different problem</button>`;
-    el.querySelectorAll("input[type=checkbox]").forEach(box=>{
-      box.onchange=()=>{
-        box.closest(".check").classList.toggle("done", box.checked);
-        const all=JSON.parse(localStorage.getItem("ko-ticks")||"{}");
-        all[key]=all[key]||{}; all[key][box.dataset.i]=box.checked;
-        localStorage.setItem("ko-ticks", JSON.stringify(all));
-      };
+  }
+  if(name==="done") inner=`<p class="tiny">Session closed</p><h1>Stop while it still feels possible.</h1><p class="lede">Do not start a second room tonight.</p><button class="pill" id="home">Back to the start</button>`;
+  if(name!=="home") root.innerHTML=`<main>${inner}</main>`;
+  if(name==="time") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.time=b.dataset.v;go("pets")});
+  if(name==="pets") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.pets=b.dataset.v;go("problem")});
+  if(name==="problem") root.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{S.problem=b.dataset.v;go("plan")});
+  if(name==="plan"){
+    root.querySelectorAll("input[type=checkbox]").forEach(box=>box.onchange=()=>{
+      box.closest(".check").classList.toggle("done",box.checked);
+      const all=JSON.parse(localStorage.getItem("ko-ticks")||"{}"); all[key=S.problem+":"+S.time+":"+S.pets]=all[key]||{}; all[key][box.dataset.i]=box.checked; localStorage.setItem("ko-ticks",JSON.stringify(all));
     });
     document.getElementById("enough").onclick=()=>go("done");
     document.getElementById("again").onclick=()=>go("problem");
-    return;
   }
-  el.innerHTML = `<p class="tiny">Session closed</p>
-    <h1>Stop while it still feels possible.</h1>
-    <p class="lede">Come back tomorrow and tap the next hard spot. That is how a kitchen actually changes.</p>
-    <div class="panel"><p class="label">Remember</p><p>Do not reward a good session by starting a second room tonight.</p></div>
-    <button class="pill" id="home">Back to the start</button>`;
-  document.getElementById("home").onclick=()=>go("home");
+  if(name==="done") document.getElementById("home").onclick=()=>go("home");
 }
 render("home");
 </script>
