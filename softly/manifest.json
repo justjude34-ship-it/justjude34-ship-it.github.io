@@ -1,0 +1,15 @@
+{
+  "name": "Softly",
+  "short_name": "Softly",
+  "description": "A gentle holding place for things you’re putting off. Nest companion for ADHD and CPTSD task paralysis.",
+  "start_url": "/softly/",
+  "scope": "/softly/",
+  "display": "standalone",
+  "background_color": "#131211",
+  "theme_color": "#131211",
+  "orientation": "portrait-primary",
+  "lang": "en-AU",
+  "icons": [
+    { "src": "/softly/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
