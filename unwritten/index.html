@@ -4,12 +4,279 @@
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <meta name="theme-color" content="#f4efe6"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
 <title>Unwritten</title>
 <link rel="manifest" href="./manifest.webmanifest"/>
 <link rel="icon" href="./icon.svg"/>
-<style>body{font-family:sans-serif;background:#f4efe6;color:#3a342c;padding:2rem}a{color:#6f7f6c}</style>
+<link rel="apple-touch-icon" href="./icon.svg"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--cream:#f4efe6;--paper:#fffaf3;--ink:#3a342c;--soft:#8a8174;--sage:#6f7f6c;--gold:#c4a574;--gold-ink:#2d261c;--line:#eadfce}
+*{box-sizing:border-box}html,body{margin:0;background:var(--cream);color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+button,a,[role=button]{cursor:pointer}
+h1,h2,h3{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;text-wrap:balance;margin:0}
+p{text-wrap:pretty}
+.app{max-width:440px;margin:0 auto;min-height:100dvh;padding:max(1.2rem,env(safe-area-inset-top)) 1.15rem calc(5.4rem + env(safe-area-inset-bottom))}
+.app.cover-pad{padding-bottom:2rem}
+.screen{display:none}.screen.on{display:block}
+.brand{font-size:1.7rem;letter-spacing:.02em}
+.muted{color:var(--soft);font-size:.88rem;line-height:1.5}
+.card{background:var(--paper);border-radius:1.1rem;padding:1rem 1.05rem;margin:.55rem 0;box-shadow:0 8px 24px rgba(90,70,40,.06)}
+.card h3{font-size:1.22rem;margin-bottom:.2rem}
+.gold-edge{border-left:3px solid var(--gold)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:0;border-radius:999px;padding:.7rem 1.2rem;font:600 1rem Nunito,system-ui;background:var(--gold);color:var(--gold-ink)}
+.ghost{background:transparent;border:1px solid var(--line);color:var(--ink)}
+textarea,input{width:100%;border:0;border-radius:.9rem;background:var(--paper);color:var(--ink);font:1rem Nunito,system-ui;padding:.9rem;margin:.35rem 0}
+textarea{min-height:7rem;resize:vertical}
+.door{display:block;width:100%;text-align:left;background:var(--paper);border:0;border-radius:1.1rem;padding:1rem;margin:.45rem 0;box-shadow:0 8px 24px rgba(90,70,40,.06);color:inherit}
+.door b{display:block;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.2rem;font-weight:500}
+.door span{color:var(--soft);font-size:.82rem}
+.nav{position:fixed;left:0;right:0;bottom:0;display:flex;justify-content:space-around;background:rgba(244,239,230,.94);backdrop-filter:blur(10px);border-top:1px solid var(--line);padding:.35rem .3rem calc(.45rem + env(safe-area-inset-bottom));z-index:5}
+.nav button{background:0;border:0;color:var(--soft);font:500 .72rem Nunito,system-ui;min-height:44px;min-width:44px}
+.nav button.on{color:var(--ink)}
+.thread{height:2px;width:0;margin:1.4rem 0;border-radius:99px;background:linear-gradient(90deg,transparent,var(--gold),transparent);animation:draw 1.6s ease forwards}
+@keyframes draw{to{width:100%}}
+.hero{width:100%;border-radius:1.2rem;overflow:hidden;background:linear-gradient(180deg,#f7f1e6,#ebe3d4);min-height:9.5rem;display:flex;flex-direction:column;justify-content:flex-end;padding:1.1rem 1.2rem 1.2rem;box-shadow:0 12px 32px rgba(90,70,40,.1);position:relative}
+.hero:before{content:"";position:absolute;left:8%;right:8%;top:54%;height:2px;background:linear-gradient(90deg,transparent,#c4a574,transparent);border-radius:99px}
+.hero:after{content:"";position:absolute;left:50%;top:50%;width:10px;height:10px;margin:-4px 0 0 -5px;border-radius:50%;background:#c4a574;box-shadow:0 0 0 3px rgba(196,165,116,.25)}
+.hero h1{position:relative;z-index:1;font-size:2.1rem;letter-spacing:.04em}
+.hero p{position:relative;z-index:1;margin:.2rem 0 0;font-family:"Cormorant Garamond",Georgia,serif;font-size:1.05rem}
+.orb{width:140px;height:140px;border-radius:50%;margin:1.2rem auto;background:radial-gradient(circle at 40% 35%,#e7d7b3,var(--sage));animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.86)}50%{transform:scale(1.06)}}
+.garden{display:flex;flex-wrap:wrap;gap:.4rem;min-height:4.5rem;align-items:flex-end;padding:.4rem 0 1rem;font-size:1.6rem}
+.tap{display:flex;justify-content:space-between;align-items:center;gap:.75rem;min-height:48px;padding:.75rem .9rem;margin-top:.45rem;border-radius:.85rem;background:var(--cream);color:var(--ink);text-decoration:none}
+.tap b{font-size:.92rem}.tap span{color:var(--gold);font-weight:700;font-size:.88rem;flex-shrink:0}
+.tiny{font-size:.78rem;color:var(--soft);line-height:1.45}
+@media (prefers-reduced-motion:reduce){.thread,.orb{animation:none}.thread{width:100%}}
+</style>
 </head>
 <body>
-<p>Restoring Unwritten. Please refresh in a moment.</p>
+<div class="app cover-pad" id="app">
+
+<section id="cover" class="screen on">
+  <div class="hero">
+    <h1>Unwritten</h1>
+    <p>You are not crazy.</p>
+  </div>
+  <div class="thread"></div>
+  <p style="font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem;margin:.2rem 0 1.1rem">There was a script.</p>
+  <button class="btn" data-go="home">I am here</button>
+  <p class="tiny" style="margin-top:1rem">Private. Stays on this phone. Not therapy — a friend.</p>
+</section>
+
+<section id="home" class="screen">
+  <header><p class="brand">Unwritten</p><p class="muted">Your story is still being written.</p></header>
+  <button class="door" data-go="detect"><b>Detect</b><span>What just happened?</span></button>
+  <button class="door" data-go="thread"><b>Thread</b><span>Map the story</span></button>
+  <button class="door" data-go="beads"><b>Beads</b><span>Reality Anchor</span></button>
+  <button class="door" data-go="exit"><b>Way out</b><span>Exit Map</span></button>
+  <button class="door" data-go="garden"><b>Garden</b><span>What is growing</span></button>
+  <button class="door" data-go="breathe"><b>Breathe</b><span>Thirty seconds</span></button>
+  <button class="door" data-go="help"><b>Help</b><span>Helplines you can tap</span></button>
+</section>
+
+<section id="detect" class="screen">
+  <h2 class="brand">Detect</h2>
+  <p class="muted">Tell me what she just did. I will name the move — not you.</p>
+  <textarea id="what" placeholder="She said…"></textarea>
+  <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin:.4rem 0 1rem">
+    <button class="btn ghost" id="listen">Speak</button>
+    <button class="btn" id="nameit">Name it</button>
+  </div>
+  <div id="hits"></div>
+</section>
+
+<section id="thread" class="screen">
+  <h2 class="brand">Thread</h2>
+  <p class="muted">Knots on your thread. The script, in your words.</p>
+  <input id="knot" placeholder="A year, a shift, a first time you saw it"/>
+  <button class="btn" id="addknot">Add a knot</button>
+  <div id="knots"></div>
+</section>
+
+<section id="beads" class="screen">
+  <h2 class="brand">Reality Anchor</h2>
+  <p class="muted">Your words. Your date. Proof against rewritten history.</p>
+  <textarea id="bead" placeholder="What is true"></textarea>
+  <button class="btn" id="addbead">String this bead</button>
+  <div id="beadlist"></div>
+</section>
+
+<section id="exit" class="screen">
+  <h2 class="brand">Exit Map</h2>
+  <p class="muted">Optional paths. You choose. Never all at once.</p>
+  <div class="card"><h3>Grey rock</h3><p class="muted">Short, dull, factual. You are reducing fuel, not winning the argument.</p><button class="btn ghost" data-step="grey">I tried this</button></div>
+  <div class="card"><h3>Low contact</h3><p class="muted">Fewer doors. Planned time. A script of your own for the call.</p><button class="btn ghost" data-step="low">I tried this</button></div>
+  <div class="card"><h3>No contact</h3><p class="muted">A closed door can be love for the girl you were.</p><button class="btn ghost" data-step="no">I chose this</button></div>
+  <div class="card"><h3>Rebuild</h3><p class="muted">Friends who believe you. Money of your own. A life that is not her audience.</p><button class="btn ghost" data-step="rebuild">I took a step</button></div>
+</section>
+
+<section id="garden" class="screen">
+  <h2 class="brand">Garden</h2>
+  <p class="muted">It grows when you name a pattern, save a truth, or take a step.</p>
+  <div class="garden" id="sprouts"></div>
+  <div id="stars" class="muted"></div>
+</section>
+
+<section id="breathe" class="screen">
+  <h2 class="brand">Breathe</h2>
+  <div class="orb"></div>
+  <p style="text-align:center;font-family:'Cormorant Garamond',Georgia,serif;font-size:1.15rem">In for four. Hold. Out for six.</p>
+  <div class="card"><h3>Five things</h3><p class="muted">See five. Touch four. Hear three. Soften two. Name one true thing from your Anchor.</p></div>
+  <div class="card"><h3>Reality check</h3><p class="muted" id="lastbead">Your last bead will appear here when you have one.</p></div>
+  <div class="card"><h3>If you are in danger</h3><p class="muted">AU 000 · 1800RESPECT 1800 737 732<br>US 911 · 1-800-799-7233<br>UK 999 · 0808 2000 247</p>
+  <button class="btn ghost" data-go="help">All helplines</button></div>
+  <p class="tiny">Unwritten is a companion, not therapy and not a diagnosis.</p>
+</section>
+
+<section id="help" class="screen">
+  <h2 class="brand">Help</h2>
+  <p class="muted">If you are in immediate danger, call your local emergency number.</p>
+  <div class="card"><h3>Australia</h3>
+    <a class="tap" href="tel:000"><b>Emergency</b><span>000</span></a>
+    <a class="tap" href="tel:131114"><b>Lifeline</b><span>13 11 14</span></a>
+    <a class="tap" href="tel:1300224636"><b>Beyond Blue</b><span>1300 22 4636</span></a>
+    <a class="tap" href="tel:1800737732"><b>1800RESPECT</b><span>1800 737 732</span></a>
+    <a class="tap" href="tel:1300659467"><b>Suicide Call Back Service</b><span>1300 659 467</span></a>
+    <a class="tap" href="tel:139276"><b>13YARN</b><span>13 92 76</span></a>
+    <a class="tap" href="tel:1300657380"><b>Blue Knot Foundation</b><span>1300 657 380</span></a>
+  </div>
+  <div class="card"><h3>United States</h3>
+    <a class="tap" href="tel:911"><b>Emergency</b><span>911</span></a>
+    <a class="tap" href="tel:988"><b>988 Suicide and Crisis Lifeline</b><span>Call 988</span></a>
+    <a class="tap" href="sms:988"><b>988 Suicide and Crisis Lifeline</b><span>Text 988</span></a>
+    <a class="tap" href="sms:741741?body=HOME"><b>Crisis Text Line</b><span>Text HOME to 741741</span></a>
+    <a class="tap" href="tel:18007997233"><b>National Domestic Violence Hotline</b><span>1-800-799-7233</span></a>
+    <a class="tap" href="sms:88788?body=START"><b>National Domestic Violence Hotline</b><span>Text START to 88788</span></a>
+    <a class="tap" href="tel:18006564673"><b>RAINN</b><span>1-800-656-4673</span></a>
+  </div>
+  <div class="card"><h3>United Kingdom</h3>
+    <a class="tap" href="tel:999"><b>Emergency</b><span>999</span></a>
+    <a class="tap" href="tel:116123"><b>Samaritans</b><span>116 123</span></a>
+    <a class="tap" href="sms:85258?body=SHOUT"><b>Shout</b><span>Text SHOUT to 85258</span></a>
+    <a class="tap" href="tel:08082000247"><b>National Domestic Abuse Helpline</b><span>0808 2000 247</span></a>
+  </div>
+  <div class="card"><h3>Canada</h3>
+    <a class="tap" href="tel:911"><b>Emergency</b><span>911</span></a>
+    <a class="tap" href="tel:988"><b>9-8-8 Suicide Crisis Helpline</b><span>Call 988</span></a>
+    <a class="tap" href="sms:988"><b>9-8-8 Suicide Crisis Helpline</b><span>Text 988</span></a>
+    <a class="tap" href="tel:18006686868"><b>Kids Help Phone</b><span>1-800-668-6868</span></a>
+    <a class="tap" href="sms:686868?body=CONNECT"><b>Kids Help Phone</b><span>Text CONNECT to 686868</span></a>
+    <a class="tap" href="tel:18552423310"><b>Hope for Wellness</b><span>1-855-242-3310</span></a>
+    <a class="tap" href="https://sheltersafe.ca" target="_blank" rel="noopener"><b>Local shelters</b><span>sheltersafe.ca</span></a>
+  </div>
+  <div class="card"><h3>Other countries</h3>
+    <a class="tap" href="https://findahelpline.com" target="_blank" rel="noopener"><b>Find A Helpline</b><span>findahelpline.com</span></a>
+  </div>
+  <p class="tiny">Unwritten is a companion, not therapy and not a diagnosis.</p>
+</section>
+</div>
+
+<nav class="nav" id="nav" hidden>
+  <button data-go="home">Home</button>
+  <button data-go="detect">Detect</button>
+  <button data-go="thread">Thread</button>
+  <button data-go="garden">Garden</button>
+  <button data-go="breathe">Breathe</button>
+  <button data-go="help">Help</button>
+</nav>
+
+<script>
+const P=[
+{n:"Guilt trip",k:["after all","ungrateful","i sacrificed","if you loved me","how could you"],is:"She made your boundary look like cruelty.",not:"Caring for yourself is not a betrayal."},
+{n:"Smear campaign",k:["told everyone","crazy","everyone thinks","your family","she said you"],is:"She is recruiting an audience so your story sounds like the problem.",not:"Other people repeating her line does not make it true."},
+{n:"Love-bombing",k:["so proud","i miss you","come home","gifts","love you so much"],is:"Warmth after cold is often a reset, not a change.",not:"You do not have to pay for the kind hour with your doubt."},
+{n:"Discard",k:["done with you","cut off","not my daughter","dead to me","kicked out"],is:"The drop is control. Absence is being used as a weapon.",not:"Being dropped does not mean you were disposable."},
+{n:"Gaslighting",k:["never happened","you imagined","too sensitive","that is not what","making it up","memory"],is:"She moved the ground so you would doubt your own feet.",not:"Your feet were fine."},
+{n:"Triangulation",k:["your sister","your brother","even your","everyone agrees","dad thinks"],is:"A third person was pulled in so you would feel outnumbered.",not:"A chorus she assembled is not a verdict."},
+{n:"Silent treatment",k:["ignored","will not speak","silent","blanked","no reply"],is:"Silence is being used to make you chase.",not:"You do not have to earn basic respect."},
+{n:"Hoovering",k:["just checking","family event","hospital","please call","i need you"],is:"A pull back in, often through duty or crisis.",not:"A hook is not the same as repair."},
+{n:"DARVO",k:["you are the abusive","you hurt me","after what you did","i am the victim"],is:"Deny, attack, reverse victim and offender. You became the problem in her telling.",not:"Naming harm is not harm."},
+{n:"Flying monkeys",k:["your aunt","cousin said","they told me to","family is worried"],is:"Other people were sent to do the reaching for her.",not:"Their worry can still be her script."},
+{n:"Parentification",k:["you are the only one","i have no one","look after me","my rock"],is:"You were asked to be the grown-up in a room that was not yours to hold.",not:"A child is not a parent to her mother."},
+{n:"FOG",k:["selfish","duty","family first","you owe","afraid"],is:"Fear, obligation, guilt. The fog is the method.",not:"Fog is not love."},
+{n:"Rewriting history",k:["i never","you remember wrong","that is not how","always loved you"],is:"The past is being edited so you lose the evidence.",not:"Write it down. That is why the beads exist."}
+];
+const L=k=>{try{return JSON.parse(localStorage.getItem("uw-"+k)||"[]")}catch(e){return[]}};
+const S=(k,v)=>localStorage.setItem("uw-"+k,JSON.stringify(v));
+const app=document.getElementById("app");
+const nav=document.getElementById("nav");
+function go(id){
+  document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
+  nav.hidden=id==="cover";
+  app.classList.toggle("cover-pad",id==="cover");
+  nav.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.go===id||(id==="home"&&b.dataset.go==="home")));
+  if(id==="garden")garden();
+  if(id==="breathe"){
+    const b=L("beads")[0];
+    document.getElementById("lastbead").textContent=b?b.txt:"Your last bead will appear here when you have one.";
+  }
+  if(id==="thread")drawKnots();
+  if(id==="beads")drawBeads();
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+document.querySelectorAll("[data-go]").forEach(el=>el.addEventListener("click",()=>{
+  if(el.dataset.go==="home")localStorage.setItem("uw-seen","1");
+  go(el.dataset.go);
+}));
+if(localStorage.getItem("uw-seen")==="1")go("home");
+document.getElementById("nameit").onclick=()=>{
+  const t=(document.getElementById("what").value||"").toLowerCase();
+  const hits=P.map(p=>({p,s:p.k.reduce((n,k)=>n+(t.includes(k)?1:0),0)})).filter(x=>x.s).sort((a,b)=>b.s-a.s);
+  const box=document.getElementById("hits");
+  if(!hits.length){box.innerHTML='<div class="card"><p class="muted">I hear you. If the name is not here yet, save it as a bead anyway. The feeling still counts.</p></div>';return;}
+  box.innerHTML=hits.map(({p})=>`<div class="card gold-edge"><h3>${p.n}</h3><p>${p.is}</p><p class="muted">${p.not}</p>
+    <div style="display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem">
+      <button class="btn ghost save" data-n="${p.n}">Save this bead</button>
+      <button class="btn ghost" data-go="breathe">I need to breathe</button>
+    </div></div>`).join("");
+  box.querySelectorAll(".save").forEach(b=>b.onclick=()=>{
+    const txt=document.getElementById("what").value.trim();
+    S("beads",[{t:new Date().toISOString(),n:b.dataset.n,txt},...L("beads")]);
+    S("detects",[...L("detects"),b.dataset.n]);
+    go("beads");
+  });
+  box.querySelectorAll("[data-go=breathe]").forEach(b=>b.onclick=()=>go("breathe"));
+};
+document.getElementById("listen").onclick=()=>{
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){alert("Speak works in Chrome.");return;}
+  const r=new SR();r.lang="en-AU";r.onresult=e=>{
+    const w=e.results[0][0].transcript;
+    const el=document.getElementById("what");el.value=(el.value?el.value+" ":"")+w;
+  };r.start();
+};
+document.getElementById("addknot").onclick=()=>{
+  const v=document.getElementById("knot").value.trim();if(!v)return;
+  S("knots",[{t:new Date().toISOString(),txt:v},...L("knots")]);
+  document.getElementById("knot").value="";drawKnots();
+};
+document.getElementById("addbead").onclick=()=>{
+  const v=document.getElementById("bead").value.trim();if(!v)return;
+  S("beads",[{t:new Date().toISOString(),n:"Truth",txt:v},...L("beads")]);
+  document.getElementById("bead").value="";drawBeads();
+};
+document.querySelectorAll("[data-step]").forEach(b=>b.onclick=()=>{
+  const s=L("steps");if(!s.includes(b.dataset.step)){s.push(b.dataset.step);S("steps",s);}
+  b.textContent="On your thread";
+});
+function drawKnots(){
+  const k=L("knots");
+  document.getElementById("knots").innerHTML=k.length?k.map(x=>`<p class="card">${esc(x.txt)}<span class="tiny" style="display:block;margin-top:.3rem">${x.t.slice(0,10)}</span></p>`).join(""):'<p class="muted">Golden child years. Scapegoat shift. The first time you saw the script.</p>';
+}
+function drawBeads(){
+  const b=L("beads");
+  document.getElementById("beadlist").innerHTML=b.length?b.map(x=>`<p class="card"><b>${esc(x.n||"Truth")}</b><br>${esc(x.txt)}<span class="tiny" style="display:block;margin-top:.3rem">${x.t.slice(0,10)}</span></p>`).join(""):'<p class="muted">Nothing here yet. Your first bead can be one true sentence.</p>';
+}
+function garden(){
+  const n=Math.min(18,L("detects").length+L("beads").length+L("knots").length+L("steps").length);
+  const leaves=["🌿","🍃","🌱","🌸","🌼","🌾"];
+  document.getElementById("sprouts").innerHTML=n?Array.from({length:n},(_,i)=>`<span>${leaves[i%leaves.length]}</span>`).join(""):'<span class="muted" style="font-size:.9rem">The first leaf arrives when you name something.</span>';
+  document.getElementById("stars").innerHTML=L("beads").slice(0,6).map(x=>"✦ "+esc(x.txt.split(" ").slice(0,5).join(" "))).join("<br>");
+}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&"+"amp;","<":"&"+"lt;",">":"&"+"gt;",'"':"&"+"quot;"}[c]));}
+if("serviceWorker" in navigator)navigator.serviceWorker.register("./sw.js");
+</script>
 </body>
 </html>
