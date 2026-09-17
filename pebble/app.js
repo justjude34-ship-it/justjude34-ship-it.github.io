@@ -14,12 +14,12 @@ const DEFAULTS = {
   ]
 };
 const NEEDS = [
-  { id: "help", label: "Help" },
-  { id: "break", label: "Break" },
-  { id: "yes", label: "Yes" },
-  { id: "no", label: "No" },
-  { id: "hungry", label: "Hungry" },
-  { id: "toilet", label: "Toilet" }
+  { id: "help", label: "Help", icon: "help" },
+  { id: "break", label: "Break", icon: "break" },
+  { id: "yes", label: "Yes", icon: "yes" },
+  { id: "no", label: "No", icon: "no" },
+  { id: "hungry", label: "Hungry", icon: "hungry" },
+  { id: "toilet", label: "Toilet", icon: "toilet" }
 ];
 const FEEL = {
   happy: "That makes sense.",
@@ -28,52 +28,47 @@ const FEEL = {
   scared: "That makes sense.",
   calm: "We can wait."
 };
-
+const ICONS = {
+  help: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#E8D7B8"/><path d="M16 11v8M12 16h8" stroke="#6B5340" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  break: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D7E4D6"/><path d="M11 16h10" stroke="#4F6A4E" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  yes: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D8E8C8"/><path d="M10 16l4 4 8-9" fill="none" stroke="#4A6A3E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  no: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#EAD3C8"/><path d="M12 12l8 8M20 12l-8 8" stroke="#7A4E3E" stroke-width="2.4" stroke-linecap="round"/></svg>',
+  hungry: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#F0E0B8"/><ellipse cx="16" cy="17" rx="7" ry="5" fill="#C9896A"/></svg>',
+  toilet: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D6E3EE"/><path d="M12 12h8v6a4 4 0 01-8 0z" fill="#8AA7C2"/></svg>'
+};
 const $ = (id) => document.getElementById(id);
 const state = load();
-
 function load() {
-  try {
-    return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || "{}") };
-  } catch {
-    return { ...DEFAULTS };
-  }
+  try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || "{}") }; }
+  catch { return { ...DEFAULTS }; }
 }
-function save() {
-  localStorage.setItem(KEY, JSON.stringify(state));
-}
+function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 function say(text) {
   if (!state.sound || !window.speechSynthesis) return;
   window.speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.rate = 0.86;
-  u.pitch = 1;
   window.speechSynthesis.speak(u);
 }
 function show(id) {
   document.querySelectorAll(".view").forEach((v) => v.classList.toggle("on", v.id === id));
   document.body.classList.toggle("motion-on", !!state.motion);
-  if (id === "calm") $("breath").classList.add("live");
-  else $("breath").classList.remove("live");
+  const breath = $("breath");
+  if (breath) breath.classList.toggle("live", id === "calm");
 }
 function homeLine() {
   const name = (state.childName || "").trim();
-  $("home-line").textContent = name ? `Hi ${name}. I'm here.` : "Hi. I'm here.";
+  $("home-line").textContent = name ? "Hi " + name + ". I'm here." : "Hi. I'm here.";
 }
 function renderDay() {
   const box = $("day-list");
   box.innerHTML = "";
   state.day.forEach((step, i) => {
     const b = document.createElement("button");
-    b.className = "need";
     const mark = step.done ? "Done" : (i === 0 || state.day[i - 1].done ? "Now" : "Next");
-    b.innerHTML = '<span class="dot" style="background:' + (step.done ? "#6B7F6A" : "#C4B8A8") + '"></span>' + mark + " \u00b7 " + step.label;
-    b.onclick = () => {
-      step.done = !step.done;
-      save();
-      renderDay();
-      say(step.done ? "You did it." : step.label);
-    };
+    b.className = "row" + (step.done ? " done" : "");
+    b.innerHTML = '<span class="pip"></span><span class="row-text"><small>' + mark + '</small><b>' + step.label + '</b></span>';
+    b.onclick = () => { step.done = !step.done; save(); renderDay(); say(step.done ? "You did it." : step.label); };
     box.appendChild(b);
   });
 }
@@ -82,13 +77,12 @@ function renderNeed() {
   box.innerHTML = "";
   NEEDS.forEach((n) => {
     const b = document.createElement("button");
-    b.className = "need";
-    b.textContent = n.label;
+    b.className = "row";
+    b.innerHTML = '<span class="ico">' + ICONS[n.icon] + '</span><b>' + n.label + '</b>';
     b.onclick = () => say(n.label);
     box.appendChild(b);
   });
 }
-
 document.querySelectorAll("[data-go]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const go = btn.getAttribute("data-go");
@@ -100,7 +94,6 @@ document.querySelectorAll("[data-go]").forEach((btn) => {
     show(go);
   });
 });
-
 document.querySelectorAll("[data-feel]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const feel = btn.getAttribute("data-feel");
@@ -112,17 +105,10 @@ document.querySelectorAll("[data-feel]").forEach((btn) => {
     show("felt");
   });
 });
-
-$("enter-btn").onclick = () => {
-  state.seenCover = true;
-  save();
-  homeLine();
-  show("home");
-  say("Hi. I'm here.");
-};
+$("enter-btn").onclick = () => { state.seenCover = true; save(); homeLine(); show("home"); say("Hi. I'm here."); };
 $("lock-btn").onclick = () => {
   $("pin-input").value = "";
-  $("pin-note").textContent = state.pin === "0000" ? "First time: type 0000, then you can change it later." : "";
+  $("pin-note").textContent = state.pin === "0000" ? "First time: type 0000." : "";
   $("pin-gate").classList.remove("hidden");
   $("parent-home").classList.add("hidden");
   show("parent");
@@ -134,14 +120,9 @@ $("pin-btn").onclick = () => {
     $("child-name").value = state.childName;
     $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off";
     $("motion-btn").textContent = state.motion ? "Motion: on" : "Motion: off";
-  } else {
-    $("pin-note").textContent = "Try again.";
-  }
+  } else $("pin-note").textContent = "Try again.";
 };
-$("sound-btn").onclick = () => {
-  state.sound = !state.sound;
-  $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off";
-};
+$("sound-btn").onclick = () => { state.sound = !state.sound; $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off"; };
 $("motion-btn").onclick = () => {
   state.motion = !state.motion;
   $("motion-btn").textContent = state.motion ? "Motion: on" : "Motion: off";
@@ -153,14 +134,7 @@ $("save-parent").onclick = () => {
   $("parent-note").textContent = "Saved on this phone.";
   homeLine();
 };
-$("break-btn").onclick = () => {
-  say("We can wait.");
-  $("calm-line").textContent = "We can wait.";
-};
-
-if ("serviceWorker" in navigator) {
-  navigator.serviceWorker.register("./sw.js").catch(() => {});
-}
-
+$("break-btn").onclick = () => { say("We can wait."); $("calm-line").textContent = "We can wait."; };
+if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
 homeLine();
 show(state.seenCover ? "home" : "cover");
