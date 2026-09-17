@@ -1,0 +1,19 @@
+{
+  "name": "Pebble",
+  "short_name": "Pebble",
+  "description": "A quiet companion for the day. Local-only. Not therapy.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#F4EFE6",
+  "theme_color": "#F4EFE6",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
