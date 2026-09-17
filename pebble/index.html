@@ -4,131 +4,142 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Pebble</title>
-<meta name="theme-color" content="#E7DCC8"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="theme-color" content="#EFE4CF"/>
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="icon" href="icon.svg" type="image/svg+xml"/>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=Nunito:wght@700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --ink:#2F2A24; --muted:#7A6C5C; --moss:#5A7356; --paper:#FBF4E8;
-  --line:#E4D3B8; --happy:#E7C56A; --sad:#8AA7C2; --angry:#C9896A; --scared:#9B8BB8; --calm:#8FB3A2;
+  --ink:#3A3229; --mute:#7A6B58; --moss:#5E7A54; --paper:#F7F0E2; --line:#E2D3BB;
+  --happy:#E7C56A; --sad:#8AA7C2; --angry:#C9896A; --scared:#9B8BB8; --calm:#8FB3A2;
   --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;min-height:100dvh;color:var(--ink);font-family:Nunito,system-ui,sans-serif;background:#D9C8A8}
-body{background:
-  radial-gradient(120% 70% at 50% -10%,#F4E9D2 0%,#E7D7BA 42%,#CDB892 100%)}
+html,body{margin:0;min-height:100dvh;background:#E9DCC4;color:var(--ink);font-family:Nunito,system-ui,sans-serif}
+body{background:radial-gradient(120% 80% at 50% -10%,#F6EBD4,#E2D0AE 70%)}
 button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
-.app{width:min(28rem,100%);margin:0 auto;min-height:100dvh;padding:calc(.7rem + var(--safe-t)) 1.1rem calc(1.2rem + var(--safe-b))}
+.app{width:min(28rem,100%);margin:0 auto;min-height:100dvh;padding:calc(.8rem + var(--safe-t)) 1.1rem calc(1.2rem + var(--safe-b))}
 .view{display:none}.view.on{display:block}
-.stage{position:relative;margin:0 -1.1rem 1rem;padding:1.2rem 1.1rem 0;overflow:hidden}
-.stage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 18%,rgba(255,248,235,.55),transparent 58%);pointer-events:none}
-.brand{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.2rem}
-.top{display:flex;align-items:center;justify-content:space-between;min-height:2.6rem}
-.ghost,.back{background:rgba(251,244,232,.86);border:1px solid var(--line);border-radius:999px;min-height:2.6rem;padding:.35rem .95rem;font-weight:800}
-.lock{width:2.6rem;min-width:2.6rem;padding:0;border-radius:50%}
-h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:2.15rem;line-height:1.08;margin:.2rem 0 .5rem}
-.line{color:var(--muted);font-size:1.08rem;margin:0 0 1rem;font-weight:700}
-.portrait{display:block;width:min(72vw,19rem);margin:0 auto .2rem;filter:drop-shadow(0 22px 24px rgba(70,50,25,.18))}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
-.card{background:rgba(251,244,232,.92);border:1px solid rgba(228,211,184,.9);border-radius:1.25rem;min-height:6.6rem;padding:.95rem .9rem;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;font-weight:800}
-.card b{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.26rem}
-.card span{color:var(--muted);font-size:.8rem;margin-bottom:.28rem}
-.stack{display:flex;flex-direction:column;gap:.62rem}
-.feel,.row{width:100%;background:rgba(251,244,232,.94);border:1px solid var(--line);border-radius:1.2rem;min-height:4.45rem;padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;text-align:left;font-weight:800;font-size:1.16rem}
-.row small{display:block;color:var(--muted);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
-.row b{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.2rem}
-.row.done{opacity:.5}.row.done .pip{background:var(--moss)}
-.pip,.dot{width:1.1rem;height:1.1rem;border-radius:50%;background:#C4B49A;flex:0 0 auto}
-.ico{width:2rem;height:2rem;flex:0 0 auto}.ico svg{width:2rem;height:2rem;display:block}
+.top{display:flex;align-items:center;justify-content:space-between;min-height:2.5rem}
+.brand{font-family:Fraunces,Georgia,serif;font-size:1.3rem}
+.ghost,.back{min-height:2.5rem;padding:.35rem .9rem;border-radius:999px;background:#F7F0E2;border:1px solid var(--line);font-weight:800}
+.lock{width:2.5rem;min-width:2.5rem;padding:0}
+h1{font-family:Fraunces,Georgia,serif;font-size:2rem;line-height:1.1;margin:.2rem 0 .4rem}
+.line{color:var(--mute);font-size:1.1rem;margin:0 0 .9rem;font-weight:700}
+#home-line{font-family:Fraunces,Georgia,serif;font-size:1.45rem;color:var(--ink);text-align:center;min-height:2.1rem}
+.stage{display:flex;flex-direction:column;align-items:center;padding:.4rem 0 .7rem}
+.buddy{width:min(64vw,16.5rem);height:auto;display:block;filter:drop-shadow(0 16px 18px rgba(80,60,30,.16))}
+.buddy.leaf .tuft{transform:scale(1.12);transform-origin:70% 20%}
+.actions{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin:.2rem 0 1rem}
+.act{min-height:3.2rem;border-radius:1.05rem;background:#F7F0E2;border:1px solid var(--line);font-weight:800}
+.places{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+.place{min-height:4.3rem;padding:.8rem .85rem;border-radius:1.15rem;background:#F7F0E2;border:1px solid var(--line);text-align:left;font-weight:800}
+.place b{display:block;font-family:Fraunces,Georgia,serif;font-size:1.18rem}
+.place span{color:var(--mute);font-size:.78rem}
+.stack{display:flex;flex-direction:column;gap:.55rem}
+.feel,.row{display:flex;align-items:center;gap:.8rem;min-height:4.3rem;padding:.75rem 1rem;border-radius:1.15rem;background:#F7F0E2;border:1px solid var(--line);font-weight:800;font-size:1.15rem;text-align:left}
 .feel.happy .dot{background:var(--happy)}.feel.sad .dot{background:var(--sad)}.feel.angry .dot{background:var(--angry)}.feel.scared .dot{background:var(--scared)}.feel.calm .dot{background:var(--calm)}
-.result{text-align:center}.result .line{font-family:Fraunces,Georgia,serif;font-size:1.5rem;color:var(--ink);font-weight:500}
-.btn{width:100%;min-height:3.45rem;border-radius:1.15rem;border:1px solid var(--line);background:rgba(251,244,232,.94);font-weight:800;margin-top:.5rem}
+.dot,.pip{width:1.05rem;height:1.05rem;border-radius:50%;background:#C4B49A;flex:0 0 auto}
+.row.done{opacity:.55}.row.done .pip{background:var(--moss)}
+.row-text{display:flex;flex-direction:column}.row-text small{color:var(--mute);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase}
+.nests{display:grid;grid-template-columns:1fr 1fr 1fr;gap:.5rem;margin:1rem 0}
+.nest-btn{min-height:7.2rem;border-radius:1.2rem;background:#E8D7B8;border:1px solid #D3C09A;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:.6rem;font-weight:800}
+.nest-btn.found{background:#D7E4C8}.nest-btn.empty{opacity:.55}
+.bowl{width:3.2rem;height:1.15rem;border-radius:50%;background:#B89464;margin-bottom:.35rem}
+.mini{width:2.6rem;height:auto;margin-bottom:.2rem}
+.btn{width:100%;min-height:3.4rem;border-radius:1.1rem;margin-top:.5rem;background:#F7F0E2;border:1px solid var(--line);font-weight:800}
 .btn.moss{background:var(--moss);color:#F6F1E6;border-color:#4C6348}
 .breath-wrap{display:flex;justify-content:center;padding:1.1rem 0}
 .breath{width:min(56vw,14rem);height:min(56vw,14rem);border-radius:50%;background:radial-gradient(circle at 38% 32%,#F4F7F1,#C5D6C4 58%,#8EAE95);transform:scale(.9)}
 body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
 @keyframes breathe{0%,100%{transform:scale(.9)}50%{transform:scale(1.05)}}
-.tiny{color:var(--muted);font-size:.92rem;font-weight:700;line-height:1.45}
-.field,.pin{width:100%;background:#FFFDF8;border:1px solid var(--line);border-radius:1rem;min-height:3.2rem;padding:.8rem 1rem;font:inherit}
+.tiny{color:var(--mute);font-size:.92rem;font-weight:700;line-height:1.45}
+.field,.pin{width:100%;min-height:3.2rem;border-radius:1rem;padding:.8rem 1rem;font:inherit;background:#FFFDF8;border:1px solid var(--line)}
 .hidden{display:none!important}
+.result{text-align:center}.result .line{font-family:Fraunces,Georgia,serif;font-size:1.5rem;color:var(--ink)}
 @media (prefers-reduced-motion:reduce){.breath{animation:none!important}}
 </style>
 </head>
 <body>
 <div class="app">
 <section id="cover" class="view on">
+  <p class="brand">Pebble</p>
   <div class="stage">
-    <p class="brand">Pebble</p>
-    <svg class="portrait" viewBox="0 0 320 280" aria-hidden="true">
-      <ellipse cx="160" cy="248" rx="108" ry="18" fill="#C3AD8A" opacity=".55"/>
-      <path d="M70 236c18-22 54-34 90-34s72 12 90 34c-20 14-56 22-90 22s-70-8-90-22z" fill="#B08958"/>
-      <path d="M82 230c16-14 46-22 78-22s62 8 78 22c-16 10-46 16-78 16s-62-6-78-16z" fill="#C9A36E"/>
-      <path d="M96 224c10-8 28-12 64-12s54 4 64 12c-12 7-36 11-64 11s-52-4-64-11z" fill="#A67C4A"/>
-      <ellipse cx="160" cy="168" rx="92" ry="58" fill="#8F7358"/>
-      <ellipse cx="160" cy="160" rx="86" ry="54" fill="#C4A27A"/>
-      <ellipse cx="132" cy="142" rx="34" ry="20" fill="#E9D3B3" opacity=".55"/>
-      <ellipse cx="148" cy="118" rx="18" ry="10" fill="#9A7A58" opacity=".25"/>
-      <circle cx="186" cy="176" r="7" fill="#A88462" opacity=".28"/>
-      <circle cx="120" cy="184" r="5" fill="#A88462" opacity=".22"/>
-      <ellipse cx="136" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
-      <ellipse cx="184" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
-      <circle cx="138.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
-      <circle cx="186.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
-      <path d="M146 178c9 9 21 9 30 0" fill="none" stroke="#5A4332" stroke-width="3.2" stroke-linecap="round"/>
-      <circle cx="122" cy="172" r="6" fill="#D9A392" opacity=".7"/>
-      <circle cx="198" cy="172" r="6" fill="#D9A392" opacity=".7"/>
-      <path d="M148 92c6-28 24-42 38-36 3 20-6 36-24 44-7 3-13-2-14-8z" fill="#6B8A62"/>
-      <path d="M176 90c8-24 30-30 40-18-3 20-18 30-34 34-7 1-10-6-6-16z" fill="#4F6B48"/>
-      <path d="M160 88c-12-22-34-22-40-10 8 18 24 24 40 24 6 0 8-6 0-14z" fill="#7E9B70"/>
+    <svg class="buddy" viewBox="0 0 200 170" aria-hidden="true">
+      <ellipse cx="100" cy="150" rx="62" ry="10" fill="#C3AD88" opacity=".5"/>
+      <ellipse cx="100" cy="148" rx="54" ry="8" fill="#B08958"/>
+      <ellipse cx="100" cy="108" rx="58" ry="46" fill="#CDB396"/>
+      <ellipse cx="100" cy="104" rx="54" ry="42" fill="#D8C2A2"/>
+      <ellipse cx="82" cy="92" rx="18" ry="11" fill="#F0E2CC" opacity=".55"/>
+      <ellipse cx="84" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+      <ellipse cx="116" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+      <path d="M90 118c6 6 14 6 20 0" fill="none" stroke="#6A5340" stroke-width="2.6" stroke-linecap="round"/>
+      <g class="tuft">
+        <path d="M92 62c3-16 13-24 20-20 1 12-4 22-14 26-4 1-7-2-6-6z" fill="#6F8A62"/>
+        <path d="M108 60c5-14 16-18 22-12-1 12-8 18-17 20-4 0-6-3-5-8z" fill="#4F6B48"/>
+      </g>
     </svg>
   </div>
-  <h1>Here when the day feels loud.</h1>
-  <p class="tiny">A still companion. Not therapy. Nothing leaves this phone.</p>
+  <h1>Pebble lives here.</h1>
+  <p class="tiny">Tap Pebble. Give a leaf. Find the nest. Quiet play, only on this phone.</p>
   <button class="btn moss" id="enter-btn">Sit with Pebble</button>
 </section>
 
 <section id="home" class="view">
   <div class="top"><div class="brand">Pebble</div><button class="ghost lock" id="lock-btn" aria-label="Parent">...</button></div>
-  <div class="stage" style="margin-top:.2rem">
-    <svg class="portrait" viewBox="0 0 320 280" aria-hidden="true" style="width:min(58vw,15rem)">
-      <ellipse cx="160" cy="248" rx="108" ry="18" fill="#C3AD8A" opacity=".55"/>
-      <path d="M70 236c18-22 54-34 90-34s72 12 90 34c-20 14-56 22-90 22s-70-8-90-22z" fill="#B08958"/>
-      <path d="M82 230c16-14 46-22 78-22s62 8 78 22c-16 10-46 16-78 16s-62-6-78-16z" fill="#C9A36E"/>
-      <ellipse cx="160" cy="168" rx="92" ry="58" fill="#8F7358"/>
-      <ellipse cx="160" cy="160" rx="86" ry="54" fill="#C4A27A"/>
-      <ellipse cx="132" cy="142" rx="34" ry="20" fill="#E9D3B3" opacity=".55"/>
-      <ellipse cx="136" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
-      <ellipse cx="184" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
-      <circle cx="138.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
-      <circle cx="186.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
-      <path d="M146 178c9 9 21 9 30 0" fill="none" stroke="#5A4332" stroke-width="3.2" stroke-linecap="round"/>
-      <circle cx="122" cy="172" r="6" fill="#D9A392" opacity=".7"/>
-      <circle cx="198" cy="172" r="6" fill="#D9A392" opacity=".7"/>
-      <path d="M148 92c6-28 24-42 38-36 3 20-6 36-24 44-7 3-13-2-14-8z" fill="#6B8A62"/>
-      <path d="M176 90c8-24 30-30 40-18-3 20-18 30-34 34-7 1-10-6-6-16z" fill="#4F6B48"/>
-      <path d="M160 88c-12-22-34-22-40-10 8 18 24 24 40 24 6 0 8-6 0-14z" fill="#7E9B70"/>
-    </svg>
+  <div class="stage">
+    <button class="buddy-tap" aria-label="Talk to Pebble">
+      <svg class="buddy" viewBox="0 0 200 170">
+        <ellipse cx="100" cy="150" rx="62" ry="10" fill="#C3AD88" opacity=".5"/>
+        <ellipse cx="100" cy="148" rx="54" ry="8" fill="#B08958"/>
+        <ellipse cx="100" cy="108" rx="58" ry="46" fill="#CDB396"/>
+        <ellipse cx="100" cy="104" rx="54" ry="42" fill="#D8C2A2"/>
+        <ellipse cx="82" cy="92" rx="18" ry="11" fill="#F0E2CC" opacity=".55"/>
+        <ellipse cx="84" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+        <ellipse cx="116" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+        <path d="M90 118c6 6 14 6 20 0" fill="none" stroke="#6A5340" stroke-width="2.6" stroke-linecap="round"/>
+        <g class="tuft">
+          <path d="M92 62c3-16 13-24 20-20 1 12-4 22-14 26-4 1-7-2-6-6z" fill="#6F8A62"/>
+          <path d="M108 60c5-14 16-18 22-12-1 12-8 18-17 20-4 0-6-3-5-8z" fill="#4F6B48"/>
+        </g>
+      </svg>
+    </button>
   </div>
   <p class="line" id="home-line">Hi. I'm here.</p>
-  <div class="grid">
-    <button class="card" data-go="day"><span>Now, then next</span><b>My Day</b></button>
-    <button class="card" data-go="feelings"><span>No wrong answer</span><b>Feelings</b></button>
-    <button class="card" data-go="calm"><span>A slower minute</span><b>Calm</b></button>
-    <button class="card" data-go="need"><span>Six quiet words</span><b>I Need</b></button>
+  <div class="actions">
+    <button class="act" id="leaf-btn">Leaf</button>
+    <button class="act" data-go="find">Find me</button>
+    <button class="act" data-go="calm">Rest</button>
   </div>
+  <div class="places">
+    <button class="place" data-go="day"><span>stepping stones</span><b>My Day</b></button>
+    <button class="place" data-go="feelings"><span>tell Pebble</span><b>Feelings</b></button>
+    <button class="place" data-go="need"><span>six words</span><b>I Need</b></button>
+    <button class="place" data-go="calm"><span>slow breath</span><b>Calm</b></button>
+  </div>
+</section>
+
+<section id="find" class="view">
+  <div class="top"><div class="brand">Find Pebble</div><button class="back" data-go="home">Home</button></div>
+  <p class="line" id="find-line">Which nest?</p>
+  <div class="nests">
+    <button class="nest-btn" data-nest="0"><svg class="mini hidden buddy" viewBox="0 0 80 60"><ellipse cx="40" cy="36" rx="22" ry="16" fill="#D8C2A2"/><ellipse cx="34" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><ellipse cx="46" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><path d="M34 18c2-8 8-10 11-7" fill="#6F8A62"/></svg><i class="bowl"></i>1</button>
+    <button class="nest-btn" data-nest="1"><svg class="mini hidden buddy" viewBox="0 0 80 60"><ellipse cx="40" cy="36" rx="22" ry="16" fill="#D8C2A2"/><ellipse cx="34" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><ellipse cx="46" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><path d="M34 18c2-8 8-10 11-7" fill="#6F8A62"/></svg><i class="bowl"></i>2</button>
+    <button class="nest-btn" data-nest="2"><svg class="mini hidden buddy" viewBox="0 0 80 60"><ellipse cx="40" cy="36" rx="22" ry="16" fill="#D8C2A2"/><ellipse cx="34" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><ellipse cx="46" cy="34" rx="2.2" ry="2.8" fill="#2C261F"/><path d="M34 18c2-8 8-10 11-7" fill="#6F8A62"/></svg><i class="bowl"></i>3</button>
+  </div>
+  <button class="btn moss" id="find-again">Again</button>
+  <p class="tiny" style="text-align:center;margin-top:.8rem">No timer. No score. Just look.</p>
 </section>
 
 <section id="day" class="view">
   <div class="top"><div class="brand">My Day</div><button class="back" data-go="home">Home</button></div>
-  <p class="line" id="day-line">This, then that.</p>
+  <p class="line">Pebble walks the stones with you.</p>
   <div class="stack" id="day-list"></div>
 </section>
 
 <section id="feelings" class="view">
   <div class="top"><div class="brand">Feelings</div><button class="back" data-go="home">Home</button></div>
-  <p class="line">You can tell me.</p>
+  <p class="line">Tell Pebble.</p>
   <div class="stack">
     <button class="feel happy" data-feel="happy"><i class="dot"></i>Happy</button>
     <button class="feel sad" data-feel="sad"><i class="dot"></i>Sad</button>
@@ -141,36 +152,44 @@ body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
 <section id="felt" class="view">
   <div class="top"><div class="brand">Feelings</div><button class="back" data-go="home">Home</button></div>
   <div class="result">
+    <div class="stage">
+      <svg class="buddy" style="width:min(42vw,11rem)" viewBox="0 0 200 170">
+        <ellipse cx="100" cy="108" rx="58" ry="46" fill="#D8C2A2"/>
+        <ellipse cx="84" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+        <ellipse cx="116" cy="104" rx="5" ry="6.2" fill="#2C261F"/>
+        <path d="M90 118c6 6 14 6 20 0" fill="none" stroke="#6A5340" stroke-width="2.6" stroke-linecap="round"/>
+        <path d="M92 62c3-16 13-24 20-20 1 12-4 22-14 26-4 1-7-2-6-6z" fill="#6F8A62"/>
+      </svg>
+    </div>
     <p class="line" id="felt-line">That makes sense.</p>
     <button class="btn moss" data-go="home">Home</button>
-    <button class="btn" data-go="calm">Calm corner</button>
+    <button class="btn" data-go="calm">Calm with Pebble</button>
   </div>
 </section>
 
 <section id="calm" class="view">
   <div class="top"><div class="brand">Calm</div><button class="back" data-go="home">Home</button></div>
-  <p class="line" id="calm-line">Slow breath.</p>
+  <p class="line" id="calm-line">Pebble can wait.</p>
   <div class="breath-wrap"><div class="breath" id="breath"></div></div>
   <button class="btn moss" id="break-btn">I need a break</button>
-  <p class="tiny" style="margin-top:1rem;text-align:center">You can leave whenever you want.</p>
 </section>
 
 <section id="need" class="view">
   <div class="top"><div class="brand">I Need</div><button class="back" data-go="home">Home</button></div>
-  <p class="line">I can help.</p>
+  <p class="line">Pebble can say it.</p>
   <div class="stack" id="need-list"></div>
 </section>
 
 <section id="parent" class="view">
   <div class="top"><div class="brand">Parent</div><button class="back" data-go="home">Home</button></div>
   <div id="pin-gate" class="stack">
-    <p class="tiny">A short key keeps this side for grown-ups.</p>
+    <p class="tiny">Grown-ups only.</p>
     <input class="pin" id="pin-input" inputmode="numeric" maxlength="4" placeholder="4-digit key"/>
     <button class="btn moss" id="pin-btn">Open</button>
     <p class="tiny" id="pin-note"></p>
   </div>
   <div id="parent-home" class="stack hidden">
-    <p class="tiny">Pebble is a helper. Not therapy. Data stays on this phone.</p>
+    <p class="tiny">Quiet play. Not therapy. Nothing leaves this phone.</p>
     <label class="tiny" for="child-name">What should Pebble call the child?</label>
     <input class="field" id="child-name" maxlength="24" placeholder="Optional"/>
     <button class="btn" id="sound-btn">Sound: off</button>
