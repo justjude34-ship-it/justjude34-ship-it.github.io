@@ -1,10 +1,12 @@
-const KEY = "pebble-v1";
+const KEY = "pebble-v2";
 const DEFAULTS = {
   seenCover: false,
   pin: "0000",
   childName: "",
   sound: false,
   motion: false,
+  tap: 0,
+  leaf: false,
   feelings: [],
   day: [
     { id: "wake", label: "Wake up", done: false },
@@ -13,13 +15,14 @@ const DEFAULTS = {
     { id: "go", label: "Go", done: false }
   ]
 };
+const TAPS = ["Hi. I'm here.", "We can sit.", "I like this nest.", "That is enough."];
 const NEEDS = [
-  { id: "help", label: "Help", icon: "help" },
-  { id: "break", label: "Break", icon: "break" },
-  { id: "yes", label: "Yes", icon: "yes" },
-  { id: "no", label: "No", icon: "no" },
-  { id: "hungry", label: "Hungry", icon: "hungry" },
-  { id: "toilet", label: "Toilet", icon: "toilet" }
+  { id: "help", label: "Help" },
+  { id: "break", label: "Break" },
+  { id: "yes", label: "Yes" },
+  { id: "no", label: "No" },
+  { id: "hungry", label: "Hungry" },
+  { id: "toilet", label: "Toilet" }
 ];
 const FEEL = {
   happy: "That makes sense.",
@@ -28,16 +31,10 @@ const FEEL = {
   scared: "That makes sense.",
   calm: "We can wait."
 };
-const ICONS = {
-  help: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#E8D7B8"/><path d="M16 11v8M12 16h8" stroke="#6B5340" stroke-width="2.4" stroke-linecap="round"/></svg>',
-  break: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D7E4D6"/><path d="M11 16h10" stroke="#4F6A4E" stroke-width="2.4" stroke-linecap="round"/></svg>',
-  yes: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D8E8C8"/><path d="M10 16l4 4 8-9" fill="none" stroke="#4A6A3E" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-  no: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#EAD3C8"/><path d="M12 12l8 8M20 12l-8 8" stroke="#7A4E3E" stroke-width="2.4" stroke-linecap="round"/></svg>',
-  hungry: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#F0E0B8"/><ellipse cx="16" cy="17" rx="7" ry="5" fill="#C9896A"/></svg>',
-  toilet: '<svg viewBox="0 0 32 32"><circle cx="16" cy="16" r="12" fill="#D6E3EE"/><path d="M12 12h8v6a4 4 0 01-8 0z" fill="#8AA7C2"/></svg>'
-};
 const $ = (id) => document.getElementById(id);
 const state = load();
+let hideSpot = 1;
+
 function load() {
   try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || "{}") }; }
   catch { return { ...DEFAULTS }; }
@@ -55,10 +52,16 @@ function show(id) {
   document.body.classList.toggle("motion-on", !!state.motion);
   const breath = $("breath");
   if (breath) breath.classList.toggle("live", id === "calm");
+  document.querySelectorAll(".buddy").forEach((el) => el.classList.toggle("leaf", !!state.leaf));
+}
+function setLine(text) {
+  const el = $("home-line");
+  if (el) el.textContent = text;
+  say(text);
 }
 function homeLine() {
   const name = (state.childName || "").trim();
-  $("home-line").textContent = name ? "Hi " + name + ". I'm here." : "Hi. I'm here.";
+  setLine(name ? "Hi " + name + ". I'm here." : TAPS[state.tap % TAPS.length]);
 }
 function renderDay() {
   const box = $("day-list");
@@ -68,7 +71,7 @@ function renderDay() {
     const mark = step.done ? "Done" : (i === 0 || state.day[i - 1].done ? "Now" : "Next");
     b.className = "row" + (step.done ? " done" : "");
     b.innerHTML = '<span class="pip"></span><span class="row-text"><small>' + mark + '</small><b>' + step.label + '</b></span>';
-    b.onclick = () => { step.done = !step.done; save(); renderDay(); say(step.done ? "You did it." : step.label); };
+    b.onclick = () => { step.done = !step.done; save(); renderDay(); say(step.done ? "Pebble came too." : step.label); };
     box.appendChild(b);
   });
 }
@@ -78,18 +81,26 @@ function renderNeed() {
   NEEDS.forEach((n) => {
     const b = document.createElement("button");
     b.className = "row";
-    b.innerHTML = '<span class="ico">' + ICONS[n.icon] + '</span><b>' + n.label + '</b>';
+    b.innerHTML = "<b>" + n.label + "</b>";
     b.onclick = () => say(n.label);
     box.appendChild(b);
   });
 }
+function setupFind() {
+  hideSpot = Math.floor(Math.random() * 3);
+  $("find-line").textContent = "Which nest?";
+  document.querySelectorAll(".nest-btn").forEach((btn, i) => {
+    btn.classList.remove("found", "empty");
+    btn.querySelector(".mini").classList.add("hidden");
+  });
+}
+
 document.querySelectorAll("[data-go]").forEach((btn) => {
   btn.addEventListener("click", () => {
     const go = btn.getAttribute("data-go");
     if (go === "day") renderDay();
     if (go === "need") renderNeed();
-    if (go === "feelings") say("You can tell me.");
-    if (go === "calm") say("Slow breath.");
+    if (go === "find") setupFind();
     if (go === "home") homeLine();
     show(go);
   });
@@ -105,7 +116,42 @@ document.querySelectorAll("[data-feel]").forEach((btn) => {
     show("felt");
   });
 });
-$("enter-btn").onclick = () => { state.seenCover = true; save(); homeLine(); show("home"); say("Hi. I'm here."); };
+
+const tapBtns = document.querySelectorAll(".buddy-tap");
+tapBtns.forEach((el) => {
+  el.addEventListener("click", () => {
+    state.tap = (state.tap + 1) % TAPS.length;
+    save();
+    setLine(TAPS[state.tap]);
+  });
+});
+const leafBtn = $("leaf-btn");
+if (leafBtn) leafBtn.onclick = () => {
+  state.leaf = !state.leaf;
+  save();
+  document.querySelectorAll(".buddy").forEach((el) => el.classList.toggle("leaf", state.leaf));
+  setLine(state.leaf ? "A leaf for Pebble." : "Back in the nest.");
+};
+document.querySelectorAll(".nest-btn").forEach((btn) => {
+  btn.addEventListener("click", () => {
+    const i = Number(btn.getAttribute("data-nest"));
+    const mini = btn.querySelector(".mini");
+    if (i === hideSpot) {
+      btn.classList.add("found");
+      mini.classList.remove("hidden");
+      $("find-line").textContent = "You found Pebble.";
+      say("You found Pebble.");
+    } else {
+      btn.classList.add("empty");
+      $("find-line").textContent = "Not this nest.";
+      say("Not this nest.");
+    }
+  });
+});
+const againBtn = $("find-again");
+if (againBtn) againBtn.onclick = () => { setupFind(); say("Which nest?"); };
+
+$("enter-btn").onclick = () => { state.seenCover = true; save(); homeLine(); show("home"); };
 $("lock-btn").onclick = () => {
   $("pin-input").value = "";
   $("pin-note").textContent = state.pin === "0000" ? "First time: type 0000." : "";
@@ -132,7 +178,6 @@ $("save-parent").onclick = () => {
   state.childName = ($("child-name").value || "").trim();
   save();
   $("parent-note").textContent = "Saved on this phone.";
-  homeLine();
 };
 $("break-btn").onclick = () => { say("We can wait."); $("calm-line").textContent = "We can wait."; };
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
