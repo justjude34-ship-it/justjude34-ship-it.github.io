@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>Pebble</title>
+<meta name="theme-color" content="#F4EFE6"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+<link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" href="icon.svg" type="image/svg+xml"/>
+<style>
+:root{
+  --bg:#F4EFE6; --card:#FFFBF4; --ink:#3D3A36; --muted:#7A736A;
+  --pebble:#C4B8A8; --pebble-dark:#8A7D6E; --moss:#6B7F6A; --line:#E4D9C8;
+  --happy:#E7C56A; --sad:#8AA7C2; --angry:#C9896A; --scared:#9B8BB8; --calm:#8FB3A2;
+  --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
+body{min-height:100dvh}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{width:min(28rem,100%);margin:0 auto;min-height:100dvh;padding:calc(.9rem + var(--safe-t)) 1.1rem calc(1.2rem + var(--safe-b))}
+.view{display:none}.view.on{display:block}
+.top{display:flex;align-items:center;justify-content:space-between;gap:.6rem;min-height:2.6rem;margin-bottom:.4rem}
+.brand{font-weight:800;font-size:1.15rem;letter-spacing:.02em}
+.ghost,.back{
+  background:var(--card);border:1px solid var(--line);border-radius:999px;
+  min-height:2.6rem;padding:.4rem .9rem;font-weight:700
+}
+.lock{width:2.6rem;min-width:2.6rem;border-radius:50%;padding:0;display:grid;place-items:center}
+h1{font-size:1.7rem;line-height:1.15;margin:.2rem 0 .35rem;font-weight:800}
+.line{color:var(--muted);font-size:1.12rem;margin:0 0 1rem;font-weight:700}
+.pebble-wrap{display:flex;flex-direction:column;align-items:center;padding:.4rem 0 1rem}
+.pebble{width:min(46vw,11.5rem);height:auto;display:block}
+.nest{width:min(56vw,14rem);height:1.15rem;margin-top:-.55rem;background:#E8DFD2;border-radius:50%;opacity:.9}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
+.card{
+  background:var(--card);border:1px solid var(--line);border-radius:1.35rem;
+  min-height:6.4rem;padding:1rem .85rem;display:flex;flex-direction:column;
+  align-items:flex-start;justify-content:space-between;text-align:left;font-weight:800
+}
+.card b{font-size:1.22rem}
+.card span{color:var(--muted);font-size:.86rem;font-weight:700}
+.stack{display:flex;flex-direction:column;gap:.65rem}
+.feel,.need{
+  background:var(--card);border:1px solid var(--line);border-radius:1.25rem;
+  min-height:4.4rem;padding:.85rem 1rem;display:flex;align-items:center;gap:.8rem;
+  font-weight:800;font-size:1.2rem;text-align:left
+}
+.dot{width:1.35rem;height:1.35rem;border-radius:50%;flex:0 0 auto}
+.feel.happy .dot{background:var(--happy)}.feel.sad .dot{background:var(--sad)}
+.feel.angry .dot{background:var(--angry)}.feel.scared .dot{background:var(--scared)}
+.feel.calm .dot{background:var(--calm)}
+.result{text-align:center;padding:1.2rem .2rem 0}
+.result .line{font-size:1.25rem;color:var(--ink)}
+.btn{
+  width:100%;min-height:3.4rem;border-radius:1.15rem;border:1px solid var(--line);
+  background:var(--card);font-weight:800;margin-top:.5rem
+}
+.btn.moss{background:var(--moss);color:#F7F4EE;border-color:var(--moss)}
+.breath-wrap{display:flex;flex-direction:column;align-items:center;padding:1.4rem 0 1rem}
+.breath{
+  width:min(58vw,14rem);height:min(58vw,14rem);border-radius:50%;
+  border:2px solid var(--moss);background:radial-gradient(circle at 40% 35%,#E7F0EA,#C5D9CC 58%,#A9C4B4);
+  transform:scale(.86)
+}
+body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
+@keyframes breathe{0%,100%{transform:scale(.86)}50%{transform:scale(1.04)}}
+.tiny{color:var(--muted);font-size:.9rem;font-weight:700;line-height:1.45}
+.field,.pin{
+  width:100%;background:#FFF;border:1px solid var(--line);border-radius:1rem;
+  min-height:3.2rem;padding:.8rem 1rem;font:inherit;color:inherit
+}
+.hidden{display:none!important}
+@media (prefers-reduced-motion:reduce){.breath{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="app">
+<section id="cover" class="view on">
+  <p class="brand">Pebble</p>
+  <div class="pebble-wrap" style="padding-top:1.4rem">
+    <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
+      <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
+      <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
+      <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+      <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+      <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
+    </svg>
+    <div class="nest"></div>
+  </div>
+  <h1>A quiet companion for the day.</h1>
+  <p class="tiny">Pebble is a helper. Not therapy. Not a diagnosis. Nothing leaves this phone.</p>
+  <button class="btn moss" id="enter-btn">Enter</button>
+</section>
+
+<section id="home" class="view">
+  <div class="top"><div class="brand">Pebble</div><button class="ghost lock" id="lock-btn" aria-label="Parent">...</button></div>
+  <div class="pebble-wrap">
+    <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
+      <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
+      <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
+      <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+      <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+      <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
+    </svg>
+    <div class="nest"></div>
+  </div>
+  <p class="line" id="home-line">Hi. I'm here.</p>
+  <div class="grid">
+    <button class="card" data-go="day"><span>Now and next</span><b>My Day</b></button>
+    <button class="card" data-go="feelings"><span>No wrong answer</span><b>Feelings</b></button>
+    <button class="card" data-go="calm"><span>Slow breath</span><b>Calm</b></button>
+    <button class="card" data-go="need"><span>Six words</span><b>I Need</b></button>
+  </div>
+</section>
+
+<section id="day" class="view">
+  <div class="top"><div class="brand">My Day</div><button class="back" data-go="home">Home</button></div>
+  <p class="line" id="day-line">This, then that.</p>
+  <div class="stack" id="day-list"></div>
+</section>
+
+<section id="feelings" class="view">
+  <div class="top"><div class="brand">Feelings</div><button class="back" data-go="home">Home</button></div>
+  <p class="line">You can tell me.</p>
+  <div class="stack">
+    <button class="feel happy" data-feel="happy"><i class="dot"></i>Happy</button>
+    <button class="feel sad" data-feel="sad"><i class="dot"></i>Sad</button>
+    <button class="feel angry" data-feel="angry"><i class="dot"></i>Angry</button>
+    <button class="feel scared" data-feel="scared"><i class="dot"></i>Scared</button>
+    <button class="feel calm" data-feel="calm"><i class="dot"></i>Calm</button>
+  </div>
+</section>
+
+<section id="felt" class="view">
+  <div class="top"><div class="brand">Feelings</div><button class="back" data-go="home">Home</button></div>
+  <div class="result">
+    <div class="pebble-wrap">
+      <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
+        <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
+        <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
+        <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+        <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
+        <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
+      </svg>
+      <div class="nest"></div>
+    </div>
+    <p class="line" id="felt-line">That makes sense.</p>
+    <button class="btn moss" data-go="home">Home</button>
+    <button class="btn" data-go="calm">Calm corner</button>
+  </div>
+</section>
+
+<section id="calm" class="view">
+  <div class="top"><div class="brand">Calm</div><button class="back" data-go="home">Home</button></div>
+  <p class="line" id="calm-line">Slow breath.</p>
+  <div class="breath-wrap"><div class="breath" id="breath"></div></div>
+  <button class="btn moss" id="break-btn">I need a break</button>
+  <p class="tiny" style="margin-top:1rem;text-align:center">You can leave whenever you want.</p>
+</section>
+
+<section id="need" class="view">
+  <div class="top"><div class="brand">I Need</div><button class="back" data-go="home">Home</button></div>
+  <p class="line">I can help.</p>
+  <div class="stack" id="need-list"></div>
+</section>
+
+<section id="parent" class="view">
+  <div class="top"><div class="brand">Parent</div><button class="back" data-go="home">Home</button></div>
+  <div id="pin-gate" class="stack">
+    <p class="tiny">A short key keeps this side for grown-ups.</p>
+    <input class="pin" id="pin-input" inputmode="numeric" maxlength="4" placeholder="4-digit key"/>
+    <button class="btn moss" id="pin-btn">Open</button>
+    <p class="tiny" id="pin-note"></p>
+  </div>
+  <div id="parent-home" class="stack hidden">
+    <p class="tiny">Pebble is a helper. Not therapy. Data stays on this phone.</p>
+    <label class="tiny" for="child-name">What should Pebble call the child?</label>
+    <input class="field" id="child-name" maxlength="24" placeholder="Optional"/>
+    <button class="btn" id="sound-btn">Sound: off</button>
+    <button class="btn" id="motion-btn">Motion: off</button>
+    <button class="btn moss" id="save-parent">Save</button>
+    <p class="tiny" id="parent-note"></p>
+  </div>
+</section>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
