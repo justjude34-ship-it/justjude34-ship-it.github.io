@@ -4,74 +4,54 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
 <title>Pebble</title>
-<meta name="theme-color" content="#F4EFE6"/>
+<meta name="theme-color" content="#E7DCC8"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <link rel="manifest" href="manifest.webmanifest"/>
 <link rel="icon" href="icon.svg" type="image/svg+xml"/>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,640&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet"/>
 <style>
 :root{
-  --bg:#F4EFE6; --card:#FFFBF4; --ink:#3D3A36; --muted:#7A736A;
-  --pebble:#C4B8A8; --pebble-dark:#8A7D6E; --moss:#6B7F6A; --line:#E4D9C8;
-  --happy:#E7C56A; --sad:#8AA7C2; --angry:#C9896A; --scared:#9B8BB8; --calm:#8FB3A2;
+  --ink:#2F2A24; --muted:#7A6C5C; --moss:#5A7356; --paper:#FBF4E8;
+  --line:#E4D3B8; --happy:#E7C56A; --sad:#8AA7C2; --angry:#C9896A; --scared:#9B8BB8; --calm:#8FB3A2;
   --safe-t:env(safe-area-inset-top,0px); --safe-b:env(safe-area-inset-bottom,0px);
 }
 *{box-sizing:border-box}
-html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,sans-serif}
-body{min-height:100dvh}
-button{font:inherit;color:inherit;cursor:pointer}
-.app{width:min(28rem,100%);margin:0 auto;min-height:100dvh;padding:calc(.9rem + var(--safe-t)) 1.1rem calc(1.2rem + var(--safe-b))}
+html,body{margin:0;min-height:100dvh;color:var(--ink);font-family:Nunito,system-ui,sans-serif;background:#D9C8A8}
+body{background:
+  radial-gradient(120% 70% at 50% -10%,#F4E9D2 0%,#E7D7BA 42%,#CDB892 100%)}
+button{font:inherit;color:inherit;cursor:pointer;border:0;background:none}
+.app{width:min(28rem,100%);margin:0 auto;min-height:100dvh;padding:calc(.7rem + var(--safe-t)) 1.1rem calc(1.2rem + var(--safe-b))}
 .view{display:none}.view.on{display:block}
-.top{display:flex;align-items:center;justify-content:space-between;gap:.6rem;min-height:2.6rem;margin-bottom:.4rem}
-.brand{font-weight:800;font-size:1.15rem;letter-spacing:.02em}
-.ghost,.back{
-  background:var(--card);border:1px solid var(--line);border-radius:999px;
-  min-height:2.6rem;padding:.4rem .9rem;font-weight:700
-}
-.lock{width:2.6rem;min-width:2.6rem;border-radius:50%;padding:0;display:grid;place-items:center}
-h1{font-size:1.7rem;line-height:1.15;margin:.2rem 0 .35rem;font-weight:800}
-.line{color:var(--muted);font-size:1.12rem;margin:0 0 1rem;font-weight:700}
-.pebble-wrap{display:flex;flex-direction:column;align-items:center;padding:.4rem 0 1rem}
-.pebble{width:min(46vw,11.5rem);height:auto;display:block}
-.nest{width:min(56vw,14rem);height:1.15rem;margin-top:-.55rem;background:#E8DFD2;border-radius:50%;opacity:.9}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:.7rem}
-.card{
-  background:var(--card);border:1px solid var(--line);border-radius:1.35rem;
-  min-height:6.4rem;padding:1rem .85rem;display:flex;flex-direction:column;
-  align-items:flex-start;justify-content:space-between;text-align:left;font-weight:800
-}
-.card b{font-size:1.22rem}
-.card span{color:var(--muted);font-size:.86rem;font-weight:700}
-.stack{display:flex;flex-direction:column;gap:.65rem}
-.feel,.need{
-  background:var(--card);border:1px solid var(--line);border-radius:1.25rem;
-  min-height:4.4rem;padding:.85rem 1rem;display:flex;align-items:center;gap:.8rem;
-  font-weight:800;font-size:1.2rem;text-align:left
-}
-.dot{width:1.35rem;height:1.35rem;border-radius:50%;flex:0 0 auto}
-.feel.happy .dot{background:var(--happy)}.feel.sad .dot{background:var(--sad)}
-.feel.angry .dot{background:var(--angry)}.feel.scared .dot{background:var(--scared)}
-.feel.calm .dot{background:var(--calm)}
-.result{text-align:center;padding:1.2rem .2rem 0}
-.result .line{font-size:1.25rem;color:var(--ink)}
-.btn{
-  width:100%;min-height:3.4rem;border-radius:1.15rem;border:1px solid var(--line);
-  background:var(--card);font-weight:800;margin-top:.5rem
-}
-.btn.moss{background:var(--moss);color:#F7F4EE;border-color:var(--moss)}
-.breath-wrap{display:flex;flex-direction:column;align-items:center;padding:1.4rem 0 1rem}
-.breath{
-  width:min(58vw,14rem);height:min(58vw,14rem);border-radius:50%;
-  border:2px solid var(--moss);background:radial-gradient(circle at 40% 35%,#E7F0EA,#C5D9CC 58%,#A9C4B4);
-  transform:scale(.86)
-}
+.stage{position:relative;margin:0 -1.1rem 1rem;padding:1.2rem 1.1rem 0;overflow:hidden}
+.stage:before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 18%,rgba(255,248,235,.55),transparent 58%);pointer-events:none}
+.brand{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.2rem}
+.top{display:flex;align-items:center;justify-content:space-between;min-height:2.6rem}
+.ghost,.back{background:rgba(251,244,232,.86);border:1px solid var(--line);border-radius:999px;min-height:2.6rem;padding:.35rem .95rem;font-weight:800}
+.lock{width:2.6rem;min-width:2.6rem;padding:0;border-radius:50%}
+h1{font-family:Fraunces,Georgia,serif;font-weight:500;font-size:2.15rem;line-height:1.08;margin:.2rem 0 .5rem}
+.line{color:var(--muted);font-size:1.08rem;margin:0 0 1rem;font-weight:700}
+.portrait{display:block;width:min(72vw,19rem);margin:0 auto .2rem;filter:drop-shadow(0 22px 24px rgba(70,50,25,.18))}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:.65rem}
+.card{background:rgba(251,244,232,.92);border:1px solid rgba(228,211,184,.9);border-radius:1.25rem;min-height:6.6rem;padding:.95rem .9rem;display:flex;flex-direction:column;justify-content:flex-end;text-align:left;font-weight:800}
+.card b{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.26rem}
+.card span{color:var(--muted);font-size:.8rem;margin-bottom:.28rem}
+.stack{display:flex;flex-direction:column;gap:.62rem}
+.feel,.row{width:100%;background:rgba(251,244,232,.94);border:1px solid var(--line);border-radius:1.2rem;min-height:4.45rem;padding:.8rem 1rem;display:flex;align-items:center;gap:.8rem;text-align:left;font-weight:800;font-size:1.16rem}
+.row small{display:block;color:var(--muted);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase}
+.row b{font-family:Fraunces,Georgia,serif;font-weight:640;font-size:1.2rem}
+.row.done{opacity:.5}.row.done .pip{background:var(--moss)}
+.pip,.dot{width:1.1rem;height:1.1rem;border-radius:50%;background:#C4B49A;flex:0 0 auto}
+.ico{width:2rem;height:2rem;flex:0 0 auto}.ico svg{width:2rem;height:2rem;display:block}
+.feel.happy .dot{background:var(--happy)}.feel.sad .dot{background:var(--sad)}.feel.angry .dot{background:var(--angry)}.feel.scared .dot{background:var(--scared)}.feel.calm .dot{background:var(--calm)}
+.result{text-align:center}.result .line{font-family:Fraunces,Georgia,serif;font-size:1.5rem;color:var(--ink);font-weight:500}
+.btn{width:100%;min-height:3.45rem;border-radius:1.15rem;border:1px solid var(--line);background:rgba(251,244,232,.94);font-weight:800;margin-top:.5rem}
+.btn.moss{background:var(--moss);color:#F6F1E6;border-color:#4C6348}
+.breath-wrap{display:flex;justify-content:center;padding:1.1rem 0}
+.breath{width:min(56vw,14rem);height:min(56vw,14rem);border-radius:50%;background:radial-gradient(circle at 38% 32%,#F4F7F1,#C5D6C4 58%,#8EAE95);transform:scale(.9)}
 body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
-@keyframes breathe{0%,100%{transform:scale(.86)}50%{transform:scale(1.04)}}
-.tiny{color:var(--muted);font-size:.9rem;font-weight:700;line-height:1.45}
-.field,.pin{
-  width:100%;background:#FFF;border:1px solid var(--line);border-radius:1rem;
-  min-height:3.2rem;padding:.8rem 1rem;font:inherit;color:inherit
-}
+@keyframes breathe{0%,100%{transform:scale(.9)}50%{transform:scale(1.05)}}
+.tiny{color:var(--muted);font-size:.92rem;font-weight:700;line-height:1.45}
+.field,.pin{width:100%;background:#FFFDF8;border:1px solid var(--line);border-radius:1rem;min-height:3.2rem;padding:.8rem 1rem;font:inherit}
 .hidden{display:none!important}
 @media (prefers-reduced-motion:reduce){.breath{animation:none!important}}
 </style>
@@ -79,40 +59,64 @@ body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
 <body>
 <div class="app">
 <section id="cover" class="view on">
-  <p class="brand">Pebble</p>
-  <div class="pebble-wrap" style="padding-top:1.4rem">
-    <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
-      <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
-      <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
-      <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-      <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-      <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
+  <div class="stage">
+    <p class="brand">Pebble</p>
+    <svg class="portrait" viewBox="0 0 320 280" aria-hidden="true">
+      <ellipse cx="160" cy="248" rx="108" ry="18" fill="#C3AD8A" opacity=".55"/>
+      <path d="M70 236c18-22 54-34 90-34s72 12 90 34c-20 14-56 22-90 22s-70-8-90-22z" fill="#B08958"/>
+      <path d="M82 230c16-14 46-22 78-22s62 8 78 22c-16 10-46 16-78 16s-62-6-78-16z" fill="#C9A36E"/>
+      <path d="M96 224c10-8 28-12 64-12s54 4 64 12c-12 7-36 11-64 11s-52-4-64-11z" fill="#A67C4A"/>
+      <ellipse cx="160" cy="168" rx="92" ry="58" fill="#8F7358"/>
+      <ellipse cx="160" cy="160" rx="86" ry="54" fill="#C4A27A"/>
+      <ellipse cx="132" cy="142" rx="34" ry="20" fill="#E9D3B3" opacity=".55"/>
+      <ellipse cx="148" cy="118" rx="18" ry="10" fill="#9A7A58" opacity=".25"/>
+      <circle cx="186" cy="176" r="7" fill="#A88462" opacity=".28"/>
+      <circle cx="120" cy="184" r="5" fill="#A88462" opacity=".22"/>
+      <ellipse cx="136" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
+      <ellipse cx="184" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
+      <circle cx="138.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
+      <circle cx="186.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
+      <path d="M146 178c9 9 21 9 30 0" fill="none" stroke="#5A4332" stroke-width="3.2" stroke-linecap="round"/>
+      <circle cx="122" cy="172" r="6" fill="#D9A392" opacity=".7"/>
+      <circle cx="198" cy="172" r="6" fill="#D9A392" opacity=".7"/>
+      <path d="M148 92c6-28 24-42 38-36 3 20-6 36-24 44-7 3-13-2-14-8z" fill="#6B8A62"/>
+      <path d="M176 90c8-24 30-30 40-18-3 20-18 30-34 34-7 1-10-6-6-16z" fill="#4F6B48"/>
+      <path d="M160 88c-12-22-34-22-40-10 8 18 24 24 40 24 6 0 8-6 0-14z" fill="#7E9B70"/>
     </svg>
-    <div class="nest"></div>
   </div>
-  <h1>A quiet companion for the day.</h1>
-  <p class="tiny">Pebble is a helper. Not therapy. Not a diagnosis. Nothing leaves this phone.</p>
-  <button class="btn moss" id="enter-btn">Enter</button>
+  <h1>Here when the day feels loud.</h1>
+  <p class="tiny">A still companion. Not therapy. Nothing leaves this phone.</p>
+  <button class="btn moss" id="enter-btn">Sit with Pebble</button>
 </section>
 
 <section id="home" class="view">
   <div class="top"><div class="brand">Pebble</div><button class="ghost lock" id="lock-btn" aria-label="Parent">...</button></div>
-  <div class="pebble-wrap">
-    <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
-      <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
-      <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
-      <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-      <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-      <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
+  <div class="stage" style="margin-top:.2rem">
+    <svg class="portrait" viewBox="0 0 320 280" aria-hidden="true" style="width:min(58vw,15rem)">
+      <ellipse cx="160" cy="248" rx="108" ry="18" fill="#C3AD8A" opacity=".55"/>
+      <path d="M70 236c18-22 54-34 90-34s72 12 90 34c-20 14-56 22-90 22s-70-8-90-22z" fill="#B08958"/>
+      <path d="M82 230c16-14 46-22 78-22s62 8 78 22c-16 10-46 16-78 16s-62-6-78-16z" fill="#C9A36E"/>
+      <ellipse cx="160" cy="168" rx="92" ry="58" fill="#8F7358"/>
+      <ellipse cx="160" cy="160" rx="86" ry="54" fill="#C4A27A"/>
+      <ellipse cx="132" cy="142" rx="34" ry="20" fill="#E9D3B3" opacity=".55"/>
+      <ellipse cx="136" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
+      <ellipse cx="184" cy="158" rx="7" ry="8.6" fill="#2C261F"/>
+      <circle cx="138.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
+      <circle cx="186.4" cy="155.6" r="1.8" fill="#F6EFE3"/>
+      <path d="M146 178c9 9 21 9 30 0" fill="none" stroke="#5A4332" stroke-width="3.2" stroke-linecap="round"/>
+      <circle cx="122" cy="172" r="6" fill="#D9A392" opacity=".7"/>
+      <circle cx="198" cy="172" r="6" fill="#D9A392" opacity=".7"/>
+      <path d="M148 92c6-28 24-42 38-36 3 20-6 36-24 44-7 3-13-2-14-8z" fill="#6B8A62"/>
+      <path d="M176 90c8-24 30-30 40-18-3 20-18 30-34 34-7 1-10-6-6-16z" fill="#4F6B48"/>
+      <path d="M160 88c-12-22-34-22-40-10 8 18 24 24 40 24 6 0 8-6 0-14z" fill="#7E9B70"/>
     </svg>
-    <div class="nest"></div>
   </div>
   <p class="line" id="home-line">Hi. I'm here.</p>
   <div class="grid">
-    <button class="card" data-go="day"><span>Now and next</span><b>My Day</b></button>
+    <button class="card" data-go="day"><span>Now, then next</span><b>My Day</b></button>
     <button class="card" data-go="feelings"><span>No wrong answer</span><b>Feelings</b></button>
-    <button class="card" data-go="calm"><span>Slow breath</span><b>Calm</b></button>
-    <button class="card" data-go="need"><span>Six words</span><b>I Need</b></button>
+    <button class="card" data-go="calm"><span>A slower minute</span><b>Calm</b></button>
+    <button class="card" data-go="need"><span>Six quiet words</span><b>I Need</b></button>
   </div>
 </section>
 
@@ -137,16 +141,6 @@ body.motion-on .breath.live{animation:breathe 8s ease-in-out infinite}
 <section id="felt" class="view">
   <div class="top"><div class="brand">Feelings</div><button class="back" data-go="home">Home</button></div>
   <div class="result">
-    <div class="pebble-wrap">
-      <svg class="pebble" viewBox="0 0 200 140" aria-hidden="true">
-        <ellipse cx="100" cy="96" rx="62" ry="28" fill="#B9A898"/>
-        <ellipse cx="100" cy="78" rx="70" ry="42" fill="#C4B8A8"/>
-        <ellipse cx="78" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-        <ellipse cx="122" cy="72" rx="6" ry="7.2" fill="#3D3A36"/>
-        <path d="M96 46c2-10 8-16 14-14 1 8-3 16-10 20-3 1-5-1-4-6z" fill="#6B7F6A"/>
-      </svg>
-      <div class="nest"></div>
-    </div>
     <p class="line" id="felt-line">That makes sense.</p>
     <button class="btn moss" data-go="home">Home</button>
     <button class="btn" data-go="calm">Calm corner</button>
