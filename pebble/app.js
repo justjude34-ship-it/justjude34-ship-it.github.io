@@ -1,4 +1,4 @@
-const KEY = "pebble-v2";
+const KEY = "pebble-v3";
 const DEFAULTS = {
   seenCover: false,
   pin: "0000",
@@ -6,7 +6,7 @@ const DEFAULTS = {
   sound: false,
   motion: false,
   tap: 0,
-  leaf: false,
+  leaves: 0,
   feelings: [],
   day: [
     { id: "wake", label: "Wake up", done: false },
@@ -15,20 +15,19 @@ const DEFAULTS = {
     { id: "go", label: "Go", done: false }
   ]
 };
-const TAPS = ["Hi. I'm here.", "We can sit.", "I like this nest.", "That is enough."];
-const NEEDS = [
-  { id: "help", label: "Help" },
-  { id: "break", label: "Break" },
-  { id: "yes", label: "Yes" },
-  { id: "no", label: "No" },
-  { id: "hungry", label: "Hungry" },
-  { id: "toilet", label: "Toilet" }
+const TAPS = [
+  "Hi. I'm here.",
+  "We can sit.",
+  "I like this nest.",
+  "You can tap again.",
+  "That is enough."
 ];
+const NEEDS = ["Help", "Break", "Yes", "No", "Hungry", "Toilet", "Wait", "Quiet"];
 const FEEL = {
-  happy: "That makes sense.",
-  sad: "That makes sense.",
-  angry: "That makes sense.",
-  scared: "That makes sense.",
+  happy: "I'm glad you said that.",
+  sad: "Sad can sit here too.",
+  angry: "Angry is allowed.",
+  scared: "We can go slow.",
   calm: "We can wait."
 };
 const $ = (id) => document.getElementById(id);
@@ -36,8 +35,14 @@ const state = load();
 let hideSpot = 1;
 
 function load() {
-  try { return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || "{}") }; }
-  catch { return { ...DEFAULTS }; }
+  try {
+    const raw = { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) || "{}") };
+    if (!Array.isArray(raw.day) || !raw.day.length) raw.day = DEFAULTS.day.map((d) => ({ ...d }));
+    raw.leaves = Math.max(0, Math.min(3, Number(raw.leaves) || 0));
+    return raw;
+  } catch {
+    return { ...DEFAULTS, day: DEFAULTS.day.map((d) => ({ ...d })) };
+  }
 }
 function save() { localStorage.setItem(KEY, JSON.stringify(state)); }
 function say(text) {
@@ -47,12 +52,18 @@ function say(text) {
   u.rate = 0.86;
   window.speechSynthesis.speak(u);
 }
+function paintLeaves() {
+  document.querySelectorAll(".buddy").forEach((el) => {
+    el.classList.remove("leaves-1", "leaves-2", "leaves-3");
+    if (state.leaves) el.classList.add("leaves-" + state.leaves);
+  });
+}
 function show(id) {
   document.querySelectorAll(".view").forEach((v) => v.classList.toggle("on", v.id === id));
   document.body.classList.toggle("motion-on", !!state.motion);
   const breath = $("breath");
   if (breath) breath.classList.toggle("live", id === "calm");
-  document.querySelectorAll(".buddy").forEach((el) => el.classList.toggle("leaf", !!state.leaf));
+  paintLeaves();
 }
 function setLine(text) {
   const el = $("home-line");
@@ -63,35 +74,79 @@ function homeLine() {
   const name = (state.childName || "").trim();
   setLine(name ? "Hi " + name + ". I'm here." : TAPS[state.tap % TAPS.length]);
 }
+function nowIndex() {
+  const i = state.day.findIndex((s) => !s.done);
+  return i === -1 ? state.day.length - 1 : i;
+}
 function renderDay() {
   const box = $("day-list");
+  if (!box) return;
   box.innerHTML = "";
+  const here = nowIndex();
   state.day.forEach((step, i) => {
     const b = document.createElement("button");
-    const mark = step.done ? "Done" : (i === 0 || state.day[i - 1].done ? "Now" : "Next");
-    b.className = "row" + (step.done ? " done" : "");
+    const mark = step.done ? "Done" : i === here ? "Pebble is here" : "Next";
+    b.className = "row" + (step.done ? " done" : "") + (i === here && !step.done ? " now" : "");
     b.innerHTML = '<span class="pip"></span><span class="row-text"><small>' + mark + '</small><b>' + step.label + '</b></span>';
-    b.onclick = () => { step.done = !step.done; save(); renderDay(); say(step.done ? "Pebble came too." : step.label); };
+    b.onclick = () => {
+      step.done = !step.done;
+      save();
+      renderDay();
+      say(step.done ? "Pebble came too." : step.label);
+    };
     box.appendChild(b);
   });
 }
 function renderNeed() {
   const box = $("need-list");
+  if (!box) return;
   box.innerHTML = "";
-  NEEDS.forEach((n) => {
+  NEEDS.forEach((label) => {
     const b = document.createElement("button");
     b.className = "row";
-    b.innerHTML = "<b>" + n.label + "</b>";
-    b.onclick = () => say(n.label);
+    b.innerHTML = "<b>" + label + "</b>";
+    b.onclick = () => {
+      $("said-word").textContent = label;
+      $("said-note").textContent = "Pebble can say this.";
+      say(label);
+      show("said");
+    };
     box.appendChild(b);
+  });
+}
+function renderDayEdit() {
+  const box = $("day-edit");
+  if (!box) return;
+  box.innerHTML = "";
+  state.day.forEach((step, i) => {
+    const row = document.createElement("div");
+    row.className = "edit-row";
+    const input = document.createElement("input");
+    input.className = "field";
+    input.value = step.label;
+    input.maxLength = 24;
+    input.oninput = () => { step.label = input.value.slice(0, 24); save(); };
+    const del = document.createElement("button");
+    del.className = "ghost";
+    del.textContent = "x";
+    del.onclick = () => {
+      if (state.day.length < 2) return;
+      state.day.splice(i, 1);
+      save();
+      renderDayEdit();
+    };
+    row.appendChild(input);
+    row.appendChild(del);
+    box.appendChild(row);
   });
 }
 function setupFind() {
   hideSpot = Math.floor(Math.random() * 3);
   $("find-line").textContent = "Which nest?";
-  document.querySelectorAll(".nest-btn").forEach((btn, i) => {
+  document.querySelectorAll(".nest-btn").forEach((btn) => {
     btn.classList.remove("found", "empty");
-    btn.querySelector(".mini").classList.add("hidden");
+    const mini = btn.querySelector(".mini");
+    if (mini) mini.classList.add("hidden");
   });
 }
 
@@ -111,34 +166,38 @@ document.querySelectorAll("[data-feel]").forEach((btn) => {
     state.feelings.push({ feel, at: Date.now() });
     if (state.feelings.length > 40) state.feelings = state.feelings.slice(-40);
     save();
-    $("felt-line").textContent = FEEL[feel] || "That makes sense.";
-    say(FEEL[feel] || "That makes sense.");
+    const line = FEEL[feel] || "That makes sense.";
+    $("felt-line").textContent = line;
+    say(line);
     show("felt");
   });
 });
 
-const tapBtns = document.querySelectorAll(".buddy-tap");
-tapBtns.forEach((el) => {
+document.querySelectorAll(".buddy-tap").forEach((el) => {
   el.addEventListener("click", () => {
     state.tap = (state.tap + 1) % TAPS.length;
     save();
     setLine(TAPS[state.tap]);
+    el.classList.add("pulse");
+    setTimeout(() => el.classList.remove("pulse"), 180);
   });
 });
+
 const leafBtn = $("leaf-btn");
 if (leafBtn) leafBtn.onclick = () => {
-  state.leaf = !state.leaf;
+  state.leaves = state.leaves >= 3 ? 0 : state.leaves + 1;
   save();
-  document.querySelectorAll(".buddy").forEach((el) => el.classList.toggle("leaf", state.leaf));
-  setLine(state.leaf ? "A leaf for Pebble." : "Back in the nest.");
+  paintLeaves();
+  setLine(state.leaves ? "Leaf " + state.leaves + " of 3." : "The nest is clear.");
 };
+
 document.querySelectorAll(".nest-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const i = Number(btn.getAttribute("data-nest"));
     const mini = btn.querySelector(".mini");
     if (i === hideSpot) {
       btn.classList.add("found");
-      mini.classList.remove("hidden");
+      if (mini) mini.classList.remove("hidden");
       $("find-line").textContent = "You found Pebble.";
       say("You found Pebble.");
     } else {
@@ -166,11 +225,17 @@ $("pin-btn").onclick = () => {
     $("child-name").value = state.childName;
     $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off";
     $("motion-btn").textContent = state.motion ? "Motion: on" : "Motion: off";
+    renderDayEdit();
   } else $("pin-note").textContent = "Try again.";
 };
-$("sound-btn").onclick = () => { state.sound = !state.sound; $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off"; };
+$("sound-btn").onclick = () => {
+  state.sound = !state.sound;
+  save();
+  $("sound-btn").textContent = state.sound ? "Sound: on" : "Sound: off";
+};
 $("motion-btn").onclick = () => {
   state.motion = !state.motion;
+  save();
   $("motion-btn").textContent = state.motion ? "Motion: on" : "Motion: off";
   document.body.classList.toggle("motion-on", state.motion);
 };
@@ -179,7 +244,22 @@ $("save-parent").onclick = () => {
   save();
   $("parent-note").textContent = "Saved on this phone.";
 };
+const addStep = $("add-step");
+if (addStep) addStep.onclick = () => {
+  if (state.day.length >= 8) return;
+  state.day.push({ id: "s" + Date.now(), label: "Next", done: false });
+  save();
+  renderDayEdit();
+};
+const resetDay = $("reset-day");
+if (resetDay) resetDay.onclick = () => {
+  state.day.forEach((s) => { s.done = false; });
+  save();
+  $("parent-note").textContent = "Today's stones are fresh.";
+};
 $("break-btn").onclick = () => { say("We can wait."); $("calm-line").textContent = "We can wait."; };
+
 if ("serviceWorker" in navigator) navigator.serviceWorker.register("./sw.js").catch(() => {});
 homeLine();
+paintLeaves();
 show(state.seenCover ? "home" : "cover");
