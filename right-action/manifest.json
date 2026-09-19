@@ -1,0 +1,13 @@
+{
+  "name": "Right Action — Your Right Action Number",
+  "short_name": "Right Action",
+  "description": "Personal-year companion inspired by Juno Jordan. What this year is for, and the next useful step.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#08070b",
+  "theme_color": "#08070b",
+  "icons": [
+    { "src": "./icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}
